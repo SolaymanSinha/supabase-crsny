@@ -4,8 +4,12 @@ import { getPayloadInstance } from '@/lib/utils/getPayload'
 import { Company } from '@/payload-types'
 import { inject, injectable } from 'tsyringe'
 
+export interface ICompanyRespository {
+  getCompany(): Promise<Company>
+}
+
 @injectable()
-export class CompanyRepository {
+export class CompanyRepository implements ICompanyRespository {
   constructor(
     @inject(PAYLOAD_TOKEN) private readonly payload: Awaited<ReturnType<typeof getPayloadInstance>>,
   ) {}

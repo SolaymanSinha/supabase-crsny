@@ -1,7 +1,6 @@
 import 'reflect-metadata'
 import React from 'react'
 import './styles.css'
-import { logger } from '@/lib/utils/logger'
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -10,8 +9,6 @@ export const metadata = {
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
-
-  logger.info('Hello From Server Component')
 
   return (
     <html lang="en">

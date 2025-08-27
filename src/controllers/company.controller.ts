@@ -1,14 +1,18 @@
-'use server'
+// 'use server'
 import { COMPANY_SERVICE_TOKEN } from '@/lib/constants/di-tokens/company'
 import { ApiResponse, ApiResponseBuilder } from '@/lib/utils/api-response'
 import { AppError } from '@/lib/utils/errors'
 import { Company } from '@/payload-types'
-import { CompanyService } from '@/services/company.service'
+import type { ICompanyService } from '@/services/company.service'
 import { inject, injectable } from 'tsyringe'
 
+export interface ICompanyController {
+  getCompany(): Promise<ApiResponse<Company>>
+}
+
 @injectable()
-export class CompanyController {
-  constructor(@inject(COMPANY_SERVICE_TOKEN) private readonly companyService: CompanyService) {}
+export class CompanyController implements ICompanyController {
+  constructor(@inject(COMPANY_SERVICE_TOKEN) private readonly companyService: ICompanyService) {}
 
   async getCompany(): Promise<ApiResponse<Company>> {
     try {
