@@ -13,6 +13,7 @@ import { Categories } from './collections/Categorie'
 import { VariantNames } from './collections/VariantNames'
 import { VariantValues } from './collections/VariantValues'
 import { Product } from './collections/Product'
+import { s3Storage } from '@payloadcms/storage-s3'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -47,6 +48,25 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     // storage-adapter-placeholder
+    s3Storage({
+      collections: {
+        media: {
+          prefix: 'cms',
+        },
+      },
+      bucket: process.env.S3_BUCKET || 'website',
+      config: {
+        endpoint: process.env.S3_ENDPOINT || 'http://127.0.0.1:54321/storage/v1/s3',
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || '625729a08b95bf1b7ff351a663f3a23c',
+          secretAccessKey:
+            process.env.S3_SECRET_ACCESS_KEY ||
+            '850181e4652dd023b7a98c58ae0d2d34bd487ee0cc3254aed6eda37307425907',
+        },
+        region: process.env.S3_REGION || 'local',
+        forcePathStyle: true,
+      },
+    }),
   ],
   bin: [
     {
