@@ -556,6 +556,10 @@ export interface Company {
   id: number;
   name: string;
   /**
+   * The logo of the company
+   */
+  logo?: (number | null) | Media;
+  /**
    * A short tagline or slogan for your company
    */
   tagline?: string | null;
@@ -622,6 +626,7 @@ export interface Company {
  */
 export interface CompanySelect<T extends boolean = true> {
   name?: T;
+  logo?: T;
   tagline?: T;
   description?: T;
   contactInfo?:

@@ -14,6 +14,17 @@ const nextConfig = {
   },
 
   serverExternalPackages: ['pino', 'pino-pretty'],
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        port: '', // leave empty unless you use a specific port
+        pathname: '/**', // match any path
+      },
+    ],
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

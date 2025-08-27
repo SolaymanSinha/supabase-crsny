@@ -16,6 +16,14 @@ export const Company: GlobalConfig = {
       required: true,
     },
     {
+      name: 'logo',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'The logo of the company',
+      },
+    },
+    {
       name: 'tagline',
       type: 'text',
       admin: {
