@@ -1,5 +1,54 @@
 import type { SanitizedConfig } from 'payload'
 import payload from 'payload'
+import type { Category } from './payload-types'
+
+const categories: Omit<Category, 'id' | 'updatedAt' | 'createdAt'>[] = [
+  {
+    name: 'Marketing',
+    slug: 'marketing',
+    featured: false,
+  },
+  {
+    name: 'Technology',
+    slug: 'technology',
+    featured: false,
+  },
+  {
+    name: 'Business',
+    slug: 'business',
+    featured: true,
+  },
+  {
+    name: 'Design',
+    slug: 'design',
+    featured: false,
+  },
+  {
+    name: 'Development',
+    slug: 'development',
+    featured: false,
+  },
+  {
+    name: 'Flyers',
+    slug: 'flyers',
+    featured: true,
+  },
+  {
+    name: 'Packaging',
+    slug: 'packaging',
+    featured: true,
+  },
+  {
+    name: 'Stickers',
+    slug: 'stickers',
+    featured: false,
+  },
+  {
+    name: 'Banners',
+    slug: 'banners',
+    featured: false,
+  },
+]
 
 export const script = async (config: SanitizedConfig) => {
   await payload.init({ config })
@@ -14,7 +63,7 @@ export const script = async (config: SanitizedConfig) => {
   // })
   // payload.logger.info('✅ Successfully admin user seeded!')
 
-  // Seed Company Global
+  // * Seed Company Global
   await payload.updateGlobal({
     slug: 'company',
     data: {
@@ -53,6 +102,16 @@ export const script = async (config: SanitizedConfig) => {
     },
   })
   payload.logger.info('✅ Successfully company global seeded!')
+
+  // * Seed Category Collection
+  for (const category of categories) {
+    await payload.create({
+      collection: 'categories',
+      data: category,
+    })
+    payload.logger.info(`✅ Seeded Category: ${category.name}`)
+  }
+  payload.logger.info('✅ Successfully category collection seeded!')
 
   process.exit(0)
 }
