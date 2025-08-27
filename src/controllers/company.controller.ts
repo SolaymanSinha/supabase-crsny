@@ -1,3 +1,4 @@
+'use server'
 import { COMPANY_SERVICE_TOKEN } from '@/lib/constants/di-tokens/company'
 import { ApiResponse, ApiResponseBuilder } from '@/lib/utils/api-response'
 import { AppError } from '@/lib/utils/errors'
