@@ -12,6 +12,8 @@ const nextConfig = {
 
     return webpackConfig
   },
+
+  serverExternalPackages: ['pino', 'pino-pretty'],
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
