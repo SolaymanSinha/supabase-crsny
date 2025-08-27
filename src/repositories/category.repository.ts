@@ -5,9 +5,9 @@ import { logger } from '@/lib/utils/logger'
 import { Category } from '@/payload-types'
 import { inject, injectable } from 'tsyringe'
 
-interface ICategoryRepository {
-  getAllCategories: () => Promise<Category[]>
-  getFeaturedCategories: () => Promise<Category[]>
+export interface ICategoryRepository {
+  getAll: () => Promise<Category[]>
+  getFeatured: () => Promise<Category[]>
 }
 
 @injectable()
@@ -16,7 +16,7 @@ export class CategoryRepository implements ICategoryRepository {
     @inject(PAYLOAD_TOKEN) private readonly payload: Awaited<ReturnType<typeof getPayloadInstance>>,
   ) {}
 
-  async getAllCategories(): Promise<Category[]> {
+  async getAll(): Promise<Category[]> {
     try {
       const categories = await this.payload.find({
         collection: 'categories',
@@ -29,7 +29,7 @@ export class CategoryRepository implements ICategoryRepository {
     }
   }
 
-  async getFeaturedCategories(): Promise<Category[]> {
+  async getFeatured(): Promise<Category[]> {
     try {
       const featuredCategories = await this.payload.find({
         collection: 'categories',

@@ -10,6 +10,9 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Company } from './globals/Company'
+import { Categories } from './collections/Categories'
+import { VariantNames } from './collections/VariantNames'
+import { VariantValues } from './collections/VariantValues'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -28,7 +31,7 @@ export default buildConfig({
           }
         : false,
   },
-  collections: [Users, Media],
+  collections: [Users, Media, Categories, VariantNames, VariantValues],
   globals: [Company],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
