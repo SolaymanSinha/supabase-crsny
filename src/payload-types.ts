@@ -84,8 +84,12 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    company: Company;
+  };
+  globalsSelect: {
+    company: CompanySelect<false> | CompanySelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -284,6 +288,123 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "company".
+ */
+export interface Company {
+  id: number;
+  name: string;
+  /**
+   * A short tagline or slogan for your company
+   */
+  tagline?: string | null;
+  /**
+   * A brief description of your company
+   */
+  description?: string | null;
+  contactInfo: {
+    primaryEmail: string;
+    /**
+     * Additional email address (e.g., customer care)
+     */
+    secondaryEmail?: string | null;
+    /**
+     * Main support phone number displayed prominently
+     */
+    primaryPhone: string;
+    secondaryPhone?: string | null;
+    mobilePhone?: string | null;
+    /**
+     * Complete office address for footer display
+     */
+    address: string;
+    city?: string | null;
+    state?: string | null;
+    zipCode?: string | null;
+    country?: string | null;
+  };
+  socialMedia?: {
+    facebook?: string | null;
+    twitter?: string | null;
+    instagram?: string | null;
+    linkedin?: string | null;
+  };
+  businessInfo?: {
+    founded?: string | null;
+    industry?: string | null;
+    size?: ('1-10' | '11-50' | '51-200' | '201-500' | '501-1000' | '1000+') | null;
+    /**
+     * For internal use only
+     */
+    taxId?: string | null;
+  };
+  seo?: {
+    /**
+     * Default title for SEO (can be overridden on individual pages)
+     */
+    metaTitle?: string | null;
+    /**
+     * Default description for SEO (can be overridden on individual pages)
+     */
+    metaDescription?: string | null;
+    /**
+     * Comma-separated keywords for SEO
+     */
+    keywords?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "company_select".
+ */
+export interface CompanySelect<T extends boolean = true> {
+  name?: T;
+  tagline?: T;
+  description?: T;
+  contactInfo?:
+    | T
+    | {
+        primaryEmail?: T;
+        secondaryEmail?: T;
+        primaryPhone?: T;
+        secondaryPhone?: T;
+        mobilePhone?: T;
+        address?: T;
+        city?: T;
+        state?: T;
+        zipCode?: T;
+        country?: T;
+      };
+  socialMedia?:
+    | T
+    | {
+        facebook?: T;
+        twitter?: T;
+        instagram?: T;
+        linkedin?: T;
+      };
+  businessInfo?:
+    | T
+    | {
+        founded?: T;
+        industry?: T;
+        size?: T;
+        taxId?: T;
+      };
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        keywords?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

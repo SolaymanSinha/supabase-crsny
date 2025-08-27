@@ -9,6 +9,7 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Company } from './globals/Company'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -19,8 +20,16 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    autoLogin:
+      process.env.NODE_ENV === 'development'
+        ? {
+            email: 'admin@admin.com',
+            password: 'admin',
+          }
+        : false,
   },
   collections: [Users, Media],
+  globals: [Company],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -35,5 +44,11 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     // storage-adapter-placeholder
+  ],
+  bin: [
+    {
+      scriptPath: path.resolve(dirname, 'seed.ts'),
+      key: 'seed',
+    },
   ],
 })
