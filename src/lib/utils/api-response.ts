@@ -47,6 +47,20 @@ export class ApiResponseBuilder {
     }
   }
 
+  static unknownError(
+    details?: unknown,
+    code: string = 'UNKNOWN_ERROR',
+    message: string = 'An unexpected error occurred',
+    statusCode: number = 500,
+  ): ApiResponse<never> {
+    return {
+      success: false,
+      error: { code, message, details },
+      message,
+      statusCode,
+    }
+  }
+
   static fromError(error: AppError): ApiResponse<never> {
     return {
       success: false,
