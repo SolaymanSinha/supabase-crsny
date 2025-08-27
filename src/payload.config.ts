@@ -6,13 +6,13 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Company } from './globals/Company'
-import { Categories } from './collections/Categories'
+import { Categories } from './collections/Categorie'
 import { VariantNames } from './collections/VariantNames'
 import { VariantValues } from './collections/VariantValues'
+import { Product } from './collections/Product'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -31,7 +31,7 @@ export default buildConfig({
           }
         : false,
   },
-  collections: [Users, Media, Categories, VariantNames, VariantValues],
+  collections: [Users, Media, Categories, VariantNames, VariantValues, Product],
   globals: [Company],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

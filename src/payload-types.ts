@@ -72,6 +72,7 @@ export interface Config {
     categories: Category;
     'variant-names': VariantName;
     'variant-values': VariantValue;
+    products: Product;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -83,6 +84,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     'variant-names': VariantNamesSelect<false> | VariantNamesSelect<true>;
     'variant-values': VariantValuesSelect<false> | VariantValuesSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -217,6 +219,120 @@ export interface VariantValue {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: number;
+  /**
+   * The main product title
+   */
+  title: string;
+  /**
+   * URL-friendly identifier for the product
+   */
+  slug: string;
+  /**
+   * Detailed product description
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Brief product description for listings
+   */
+  shortDescription?: string | null;
+  /**
+   * Primary category for this product
+   */
+  category?: (number | null) | Category;
+  /**
+   * Primary image (Will be used as thumbnail)
+   */
+  coverImage?: (number | null) | Media;
+  /**
+   * Additional images for product preview
+   */
+  previewImages?: (number | Media)[] | null;
+  /**
+   * Base price for the product (before variants)
+   */
+  basePrice: number;
+  variants?:
+    | {
+        /**
+         * Select the variant name for this variant
+         */
+        variantName?: (number | null) | VariantName;
+        /**
+         * Select the variant value for this variant
+         */
+        variantValue?: (number | null) | VariantValue;
+        price: number;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Whether the product is active and visible to customers
+   */
+  isActive?: boolean | null;
+  /**
+   * SEO settings for this product
+   */
+  seo?: {
+    /**
+     * SEO title (if different from product title)
+     */
+    title?: string | null;
+    /**
+     * SEO meta description
+     */
+    description?: string | null;
+    /**
+     * SEO keywords (comma-separated)
+     */
+    keywords?: string | null;
+  };
+  /**
+   * Configure custom upload fields for customers to upload their images/designs
+   */
+  uploadFields?:
+    | {
+        /**
+         * Label for the upload field (e.g., "Upload Logo", "Upload Design")
+         */
+        label: string;
+        /**
+         * Make this upload field required for customers
+         */
+        required?: boolean | null;
+        /**
+         * Additional instructions for customers (e.g., "PNG, JPG up to 10MB")
+         */
+        description?: string | null;
+        /**
+         * Maximum number of files allowed for this field
+         */
+        maxFiles?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -241,6 +357,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'variant-values';
         value: number | VariantValue;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: number | Product;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -352,6 +472,47 @@ export interface VariantNamesSelect<T extends boolean = true> {
  */
 export interface VariantValuesSelect<T extends boolean = true> {
   value?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  shortDescription?: T;
+  category?: T;
+  coverImage?: T;
+  previewImages?: T;
+  basePrice?: T;
+  variants?:
+    | T
+    | {
+        variantName?: T;
+        variantValue?: T;
+        price?: T;
+        id?: T;
+      };
+  isActive?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        keywords?: T;
+      };
+  uploadFields?:
+    | T
+    | {
+        label?: T;
+        required?: T;
+        description?: T;
+        maxFiles?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
