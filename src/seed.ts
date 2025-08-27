@@ -53,15 +53,15 @@ const categories: Omit<Category, 'id' | 'updatedAt' | 'createdAt'>[] = [
 export const script = async (config: SanitizedConfig) => {
   await payload.init({ config })
 
-  // Seed Admin User
-  // await payload.create({
-  //   collection: 'users',
-  //   data: {
-  //     email: 'admin@admin.com',
-  //     password: 'admin',
-  //   },
-  // })
-  // payload.logger.info('✅ Successfully admin user seeded!')
+  // * Seed Admin User
+  await payload.create({
+    collection: 'users',
+    data: {
+      email: 'admin@admin.com',
+      password: 'admin',
+    },
+  })
+  payload.logger.info('✅ Successfully admin user seeded!')
 
   // * Seed Company Global
   await payload.updateGlobal({
