@@ -3,7 +3,7 @@ import { GlobalConfig } from 'payload'
 export const Company: GlobalConfig = {
   slug: 'company',
   admin: {
-    group: 'settings',
+    group: 'Settings',
   },
   access: {
     read: () => true,

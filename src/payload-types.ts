@@ -94,9 +94,11 @@ export interface Config {
   };
   globals: {
     company: Company;
+    'web-contents': WebContent;
   };
   globalsSelect: {
     company: CompanySelect<false> | CompanySelect<true>;
+    'web-contents': WebContentsSelect<false> | WebContentsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -624,6 +626,19 @@ export interface Company {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "web-contents".
+ */
+export interface WebContent {
+  id: number;
+  /**
+   * The hero image of the website
+   */
+  heroImage?: (number | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "company_select".
  */
 export interface CompanySelect<T extends boolean = true> {
@@ -668,6 +683,16 @@ export interface CompanySelect<T extends boolean = true> {
         metaDescription?: T;
         keywords?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "web-contents_select".
+ */
+export interface WebContentsSelect<T extends boolean = true> {
+  heroImage?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

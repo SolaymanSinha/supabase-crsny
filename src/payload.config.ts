@@ -14,6 +14,7 @@ import { VariantNames } from './collections/VariantNames'
 import { VariantValues } from './collections/VariantValues'
 import { Product } from './collections/Product'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { WebContents } from './globals/WebContents'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -33,7 +34,7 @@ export default buildConfig({
         : false,
   },
   collections: [Users, Media, Categories, VariantNames, VariantValues, Product],
-  globals: [Company],
+  globals: [Company, WebContents],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
