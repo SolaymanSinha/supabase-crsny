@@ -39,5 +39,25 @@ export const WebContents: GlobalConfig = {
       relationTo: 'products',
       hasMany: true,
     },
+    {
+      name: 'partnerLogos',
+      type: 'relationship',
+      relationTo: 'media',
+      hasMany: true,
+    },
+    {
+      name: 'bestDealsHero',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'The hero image of the best deals section',
+      },
+    },
+    {
+      name: 'bestDealsProducts',
+      type: 'relationship',
+      relationTo: 'products',
+      hasMany: true,
+    },
   ],
 }
