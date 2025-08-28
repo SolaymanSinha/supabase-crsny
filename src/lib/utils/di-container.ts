@@ -17,6 +17,14 @@ import {
 import { CategoryRepository } from '@/repositories/category.repository'
 import { CategoryService } from '@/services/category.service'
 import { CategoryController } from '@/controllers/category.controller'
+import {
+  WEB_CONTENT_CONTROLLER_TOKEN,
+  WEB_CONTENT_REPOSITORY_TOKEN,
+  WEB_CONTENT_SERVICE_TOKEN,
+} from '../constants/di-tokens/webContent'
+import { WebContentRepository } from '@/repositories/webContent.repository'
+import { WebContentService } from '@/services/webContent.service'
+import { WebContentController } from '@/controllers/webContent.controller'
 
 const payload = await getPayloadInstance()
 
@@ -70,6 +78,31 @@ container.register(
   CATEGORY_CONTROLLER_TOKEN,
   {
     useClass: CategoryController,
+  },
+  { lifecycle: Lifecycle.Transient },
+)
+
+// * Web Content
+container.register(
+  WEB_CONTENT_REPOSITORY_TOKEN,
+  {
+    useClass: WebContentRepository,
+  },
+  { lifecycle: Lifecycle.ContainerScoped },
+)
+
+container.register(
+  WEB_CONTENT_SERVICE_TOKEN,
+  {
+    useClass: WebContentService,
+  },
+  { lifecycle: Lifecycle.Transient },
+)
+
+container.register(
+  WEB_CONTENT_CONTROLLER_TOKEN,
+  {
+    useClass: WebContentController,
   },
   { lifecycle: Lifecycle.Transient },
 )
