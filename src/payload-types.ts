@@ -634,6 +634,7 @@ export interface WebContent {
    * The hero image of the website
    */
   heroImage?: (number | null) | Media;
+  featuredProducts?: (number | Product)[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -693,6 +694,7 @@ export interface CompanySelect<T extends boolean = true> {
  */
 export interface WebContentsSelect<T extends boolean = true> {
   heroImage?: T;
+  featuredProducts?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -7,6 +7,7 @@ import { inject, injectable } from 'tsyringe'
 
 export interface IWebContentRepository {
   getWebContent: () => Promise<WebContent>
+  // getFeaturedProducts: () => Promise<Product[]>
   // getHeroImage: () => Promise<WebContent['heroImage']>
 }
 
@@ -20,6 +21,7 @@ export class WebContentRepository implements IWebContentRepository {
     try {
       const webContent = await this.payload.findGlobal({
         slug: 'web-contents',
+        depth: 2,
       })
 
       return webContent

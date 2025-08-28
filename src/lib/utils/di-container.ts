@@ -107,4 +107,6 @@ container.register(
   { lifecycle: Lifecycle.Transient },
 )
 
+// * Product
+
 export { container }

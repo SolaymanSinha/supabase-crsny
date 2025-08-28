@@ -4,16 +4,19 @@ import { Badge } from '../ui/badge'
 import { Product } from '@/payload-types'
 import Image from 'next/image'
 import { fallbackImageURL, getFullURL } from '@/lib/utils/url'
+import { H1 } from '../ui/h1'
+import SectionHeading from './section-heading'
 
 const FeaturedProducts = ({ products }: { products: Product[] }) => {
-  if (!products) return
-
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-    </div>
+    <>
+      <SectionHeading className="text-left">Featured Products</SectionHeading>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+    </>
   )
 }
 

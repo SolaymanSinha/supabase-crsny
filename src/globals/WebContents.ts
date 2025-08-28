@@ -18,5 +18,11 @@ export const WebContents: GlobalConfig = {
         description: 'The hero image of the website',
       },
     },
+    {
+      name: 'featuredProducts',
+      type: 'relationship',
+      relationTo: 'products',
+      hasMany: true,
+    },
   ],
 }

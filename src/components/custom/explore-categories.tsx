@@ -11,13 +11,12 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Category } from '@/payload-types'
 import Image from 'next/image'
 import { fallbackImageURL, getFullURL } from '@/lib/utils/url'
+import SectionHeading from './section-heading'
 
 const ExploreCategories = ({ categories }: { categories: Category[] }) => {
   return (
-    <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
-      {/* Title */}
-
-      <H1 className="text-left mb-5">Explore All Categories</H1>
+    <div>
+      <SectionHeading className="text-left mb-5">Explore Categories</SectionHeading>
 
       {/* Categories Carousel */}
       <div className="relative">
@@ -45,8 +44,8 @@ const ExploreCategories = ({ categories }: { categories: Category[] }) => {
                             getFullURL(category?.image?.url)) ||
                           fallbackImageURL({})
                         }
-                        width={100}
-                        height={100}
+                        width={400}
+                        height={400}
                         alt={category.name}
                         className="absolute inset-0 h-full w-full object-cover"
                       />
