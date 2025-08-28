@@ -8,6 +8,8 @@ import FeaturedProducts from '@/components/custom/featured-products'
 import TopSellers from '@/components/custom/top-sellers'
 import { PartnerLogos } from '@/components/custom/partner-logos'
 import { BestDeals } from '@/components/custom/best-deals'
+import KeyFeatures from '@/components/custom/key-features'
+import Newsletter from '@/components/custom/newsletter'
 
 export default async function HomePage() {
   const { data: webContent } = await getWebContent()
@@ -72,6 +74,9 @@ export default async function HomePage() {
             []
           }
         />
+
+        <KeyFeatures />
+        <Newsletter />
       </div>
     </div>
   )
