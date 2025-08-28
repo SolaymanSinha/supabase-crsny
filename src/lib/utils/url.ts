@@ -1,5 +1,8 @@
 export const SiteURL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-export const getURL = (url: string) => (url.startsWith('http') ? url : `${SiteURL}${url}`)
+export const getFullURL = (url: string | null | undefined) => {
+  if (!url) return null
+  return url.startsWith('http') ? url : `${SiteURL}${url}`
+}
 
 export const fallbackImageURL = ({
   width = 400,

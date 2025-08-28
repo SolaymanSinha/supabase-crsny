@@ -12,7 +12,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { Search, HelpCircle, Users, Phone, Menu } from 'lucide-react'
 // import CartSidebar from './cart-sidebar'
 import Image from 'next/image'
-import { fallbackImageURL } from '@/lib/utils/url'
+import { fallbackImageURL, getFullURL } from '@/lib/utils/url'
 import { Category, Company } from '@/payload-types'
 
 interface NavProps {
@@ -37,7 +37,7 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
             <div className="flex lg:hidden items-center space-x-2">
               {typeof logo === 'object' && (
                 <Image
-                  src={logo?.url || fallbackImageURL({ width: 32, height: 32 })}
+                  src={getFullURL(logo?.url) || fallbackImageURL({ width: 32, height: 32 })}
                   alt={name || 'Name'}
                   width={32}
                   height={32}
@@ -238,7 +238,7 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
             <div className="hidden lg:flex items-center space-x-2">
               {typeof logo === 'object' && (
                 <Image
-                  src={logo?.url || fallbackImageURL({ width: 32, height: 32 })}
+                  src={getFullURL(logo?.url) || fallbackImageURL({ width: 32, height: 32 })}
                   alt={name || 'Company Logo'}
                   width={32}
                   height={32}
