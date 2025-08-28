@@ -635,6 +635,11 @@ export interface WebContent {
    */
   heroImage?: (number | null) | Media;
   featuredProducts?: (number | Product)[] | null;
+  /**
+   * The hero image of the top sellers section
+   */
+  topSellerHero?: (number | null) | Media;
+  topSellerProducts?: (number | Product)[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -695,6 +700,8 @@ export interface CompanySelect<T extends boolean = true> {
 export interface WebContentsSelect<T extends boolean = true> {
   heroImage?: T;
   featuredProducts?: T;
+  topSellerHero?: T;
+  topSellerProducts?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
