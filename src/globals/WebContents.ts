@@ -59,5 +59,32 @@ export const WebContents: GlobalConfig = {
       relationTo: 'products',
       hasMany: true,
     },
+    {
+      name: 'footerContent',
+      label: 'Footer Content',
+      type: 'group',
+      fields: [
+        {
+          name: 'aboutDescription',
+          label: 'About Description',
+          type: 'textarea',
+        },
+        {
+          name: 'freeProofsDescription',
+          label: 'Free Proofs Description',
+          type: 'textarea',
+        },
+        {
+          name: 'businessHoursDescription',
+          label: 'Business Hours Description',
+          type: 'textarea',
+        },
+        {
+          name: 'copyright',
+          label: 'Copyright Description',
+          type: 'text',
+        },
+      ],
+    },
   ],
 }

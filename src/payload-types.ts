@@ -646,6 +646,12 @@ export interface WebContent {
    */
   bestDealsHero?: (number | null) | Media;
   bestDealsProducts?: (number | Product)[] | null;
+  footerContent?: {
+    aboutDescription?: string | null;
+    freeProofsDescription?: string | null;
+    businessHoursDescription?: string | null;
+    copyright?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -711,6 +717,14 @@ export interface WebContentsSelect<T extends boolean = true> {
   partnerLogos?: T;
   bestDealsHero?: T;
   bestDealsProducts?: T;
+  footerContent?:
+    | T
+    | {
+        aboutDescription?: T;
+        freeProofsDescription?: T;
+        businessHoursDescription?: T;
+        copyright?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
