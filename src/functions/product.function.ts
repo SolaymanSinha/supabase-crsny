@@ -7,7 +7,7 @@ import { Product } from '@/payload-types'
 
 const productController = container.resolve<ProductController>(PRODUCT_CONTROLLER_TOKEN)
 
-async function getProductBySlug(slug: string): Promise<ApiResponse<Product>> {
+export async function getProductBySlug(slug: string): Promise<ApiResponse<Product>> {
   const result = productController.getBySlug(slug)
   return result
 }

@@ -25,6 +25,14 @@ import {
 import { WebContentRepository } from '@/repositories/webContent.repository'
 import { WebContentService } from '@/services/webContent.service'
 import { WebContentController } from '@/controllers/webContent.controller'
+import {
+  PRODUCT_CONTROLLER_TOKEN,
+  PRODUCT_REPOSITORY_TOKEN,
+  PRODUCT_SERVICE_TOKEN,
+} from '../constants/di-tokens/product'
+import { ProductRepository } from '@/repositories/product.repository'
+import { ProductService } from '@/services/product.service'
+import { ProductController } from '@/controllers/product.controller'
 
 const payload = await getPayloadInstance()
 
@@ -108,5 +116,28 @@ container.register(
 )
 
 // * Product
+container.register(
+  PRODUCT_REPOSITORY_TOKEN,
+  {
+    useClass: ProductRepository,
+  },
+  { lifecycle: Lifecycle.ContainerScoped },
+)
+
+container.register(
+  PRODUCT_SERVICE_TOKEN,
+  {
+    useClass: ProductService,
+  },
+  { lifecycle: Lifecycle.Transient },
+)
+
+container.register(
+  PRODUCT_CONTROLLER_TOKEN,
+  {
+    useClass: ProductController,
+  },
+  { lifecycle: Lifecycle.Transient },
+)
 
 export { container }

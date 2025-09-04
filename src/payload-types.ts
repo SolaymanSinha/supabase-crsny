@@ -274,14 +274,19 @@ export interface Product {
   basePrice: number;
   variants?:
     | {
-        /**
-         * Select the variant name for this variant
-         */
-        variantName?: (number | null) | VariantName;
-        /**
-         * Select the variant value for this variant
-         */
-        variantValue?: (number | null) | VariantValue;
+        options?:
+          | {
+              /**
+               * Select the variant name for this variant
+               */
+              variantName?: string | null;
+              /**
+               * Select the variant value for this variant
+               */
+              variantValue?: string | null;
+              id?: string | null;
+            }[]
+          | null;
         price: number;
         id?: string | null;
       }[]
@@ -495,8 +500,13 @@ export interface ProductsSelect<T extends boolean = true> {
   variants?:
     | T
     | {
-        variantName?: T;
-        variantValue?: T;
+        options?:
+          | T
+          | {
+              variantName?: T;
+              variantValue?: T;
+              id?: T;
+            };
         price?: T;
         id?: T;
       };

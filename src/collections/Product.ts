@@ -100,22 +100,24 @@ export const Product: CollectionConfig = {
       type: 'array',
       fields: [
         {
-          name: 'variantName',
-          type: 'relationship',
-          relationTo: 'variant-names',
-          hasMany: false,
-          admin: {
-            description: 'Select the variant name for this variant',
-          },
-        },
-        {
-          name: 'variantValue',
-          type: 'relationship',
-          relationTo: 'variant-values',
-          hasMany: false,
-          admin: {
-            description: 'Select the variant value for this variant',
-          },
+          name: 'options',
+          type: 'array',
+          fields: [
+            {
+              name: 'variantName',
+              type: 'text',
+              admin: {
+                description: 'Select the variant name for this variant',
+              },
+            },
+            {
+              name: 'variantValue',
+              type: 'text',
+              admin: {
+                description: 'Select the variant value for this variant',
+              },
+            },
+          ],
         },
         {
           name: 'price',
