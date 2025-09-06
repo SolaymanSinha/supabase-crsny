@@ -2,6 +2,16 @@
 import { Product } from '@/payload-types'
 import React, { useEffect } from 'react'
 import z from 'zod'
+import { Button } from '../ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
 
 /*
  * INFO: User can add-to-cart if variant isn't available (base price) or selected variant is a valid variant
@@ -20,14 +30,6 @@ const AddToCart2 = ({ product }: { product: Product }) => {
 
   // INFO: Handling the logic for add-to-cart
   const [isValid, setIsValid] = React.useState<boolean>(false)
-  useEffect(() => {
-    if (variants) {
-      // Variant is available. So, user can't add-to-cart without selecting the variant
-      setIsValid(false)
-    } else {
-      setIsValid(true)
-    }
-  }, [])
 
   const optionMap: Record<string, Set<string>> = {}
 
@@ -49,8 +51,6 @@ const AddToCart2 = ({ product }: { product: Product }) => {
     Array.from(values),
   ])
 
-  // INFO: See the transformed object + transformed tuppled variants
-
   // INFO: This function is handling the variant chnage by user
   const handleVariantChange = (index: number, name: string, value: string) => {
     const updated = [...selectedVariants]
@@ -67,8 +67,9 @@ const AddToCart2 = ({ product }: { product: Product }) => {
   ) {
     console.log('Variants:', variants)
     console.log('Selected:', selectedVariant)
+    console.log('Variants Length: ', tuppledVariants.length)
 
-    if (!variants || selectedVariant.length <= 1) {
+    if (!variants || selectedVariant.length < tuppledVariants.length) {
       return null // nothing selected, no match
     }
 
@@ -86,8 +87,10 @@ const AddToCart2 = ({ product }: { product: Product }) => {
 
     if (result) {
       setValidVariant(result)
+      setIsValid(true)
     } else {
       setValidVariant(null)
+      setIsValid(false)
     }
   }, [selectedVariants])
 
@@ -98,28 +101,50 @@ const AddToCart2 = ({ product }: { product: Product }) => {
     console.log('Selected Variant', selectedVariants)
   }, [validVariant, selectedVariants])
 
+  useEffect(() => {
+    if (validVariant) {
+      // Variant is available. So, user can't add-to-cart without selecting the variant
+      setIsValid(false)
+    }
+
+    // else {
+    //   setIsValid(true)
+    // }
+  }, [])
+
   return (
     <form>
-      {tuppledVariants.map((variant, index) => {
-        return (
-          <select
-            defaultValue="Select variant"
-            key={variant[0]}
-            name={variant[0]}
-            onChange={(e) => handleVariantChange(index, variant[0], e.target.value)}
-          >
-            {variant[1].map((value) => {
-              return (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              )
-            })}
-          </select>
-        )
-      })}
+      <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-5">
+        {tuppledVariants.map((variant, index) => {
+          return (
+            <Select
+              key={index}
+              onValueChange={(value: string) => handleVariantChange(index, variant[0], value)}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder={`Select ${variant[0]}`} />
+              </SelectTrigger>
+              <SelectContent className="w-full">
+                {variant[1].map((value) => {
+                  return (
+                    <SelectItem className="w-full" key={value} value={value}>
+                      {value}
+                    </SelectItem>
+                  )
+                })}
+              </SelectContent>
+            </Select>
+          )
+        })}
+      </div>
 
-      {validVariant ? 'Sinha' : 'Not Sinha'}
+      <Button
+        className="mt-5 w-full bg-yellow-500"
+        disabled={validVariant === null ? true : false}
+        type="submit"
+      >
+        Add To Cart
+      </Button>
     </form>
   )
 }
