@@ -4,6 +4,7 @@ import React from 'react'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import { AddToCartForm } from '../forms/add-to-cart'
+import AddToCart2 from '../forms/add-to-cart-2'
 
 interface ReactImageGalleryType {
   original: string
@@ -39,7 +40,7 @@ const ProductDetails = ({ product }: { product: Product }) => {
             items={getReactImageGallery(
               (allImages.every((image) => typeof image === 'object' && image !== null) &&
                 allImages) ||
-                [],
+              [],
             )}
           />
         </div>
@@ -68,7 +69,8 @@ const ProductDetails = ({ product }: { product: Product }) => {
             <div className="text-2xl font-medium text-[#ffc107]">${productPrice.toFixed(2)}</div>
           </div>
 
-          <AddToCartForm product={product} />
+          {/* <AddToCartForm product={product} /> */}
+          <AddToCart2 product={product} />
         </div>
       </div>
     </section>
