@@ -29,9 +29,9 @@ export default buildConfig({
     autoLogin:
       process.env.NODE_ENV === 'development'
         ? {
-            email: 'admin@admin.com',
-            password: 'admin',
-          }
+          email: 'admin@admin.com',
+          password: 'admin',
+        }
         : false,
   },
   collections: [Users, Media, Categories, VariantNames, VariantValues, Product, Order],
@@ -56,16 +56,14 @@ export default buildConfig({
           prefix: 'cms',
         },
       },
-      bucket: process.env.S3_BUCKET || 'website',
+      bucket: process.env.S3_BUCKET || '',
       config: {
-        endpoint: process.env.S3_ENDPOINT || 'http://127.0.0.1:54321/storage/v1/s3',
+        endpoint: process.env.S3_ENDPOINT || '',
         credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID || '625729a08b95bf1b7ff351a663f3a23c',
-          secretAccessKey:
-            process.env.S3_SECRET_ACCESS_KEY ||
-            '850181e4652dd023b7a98c58ae0d2d34bd487ee0cc3254aed6eda37307425907',
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
         },
-        region: process.env.S3_REGION || 'local',
+        region: process.env.S3_REGION || '',
         forcePathStyle: true,
       },
     }),

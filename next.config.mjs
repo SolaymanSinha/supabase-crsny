@@ -29,6 +29,12 @@ const nextConfig = {
         port: '3000', // leave empty unless you use a specific port
         pathname: '/**', // match any path
       },
+      {
+        protocol: 'https',
+        hostname: 'supabase-crsny.vercel.app',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 }
