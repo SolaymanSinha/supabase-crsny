@@ -33,6 +33,14 @@ import {
 import { ProductRepository } from '@/repositories/product.repository'
 import { ProductService } from '@/services/product.service'
 import { ProductController } from '@/controllers/product.controller'
+import {
+  ORDER_CONTROLLER_TOKEN,
+  ORDER_REPOSITORY_TOKEN,
+  ORDER_SERVICE_TOKEN,
+} from '../constants/di-tokens/order'
+import { OrderRepository } from '@/repositories/order.repository'
+import { OrderService } from '@/services/order.service'
+import { OrderController } from '@/controllers/order.controller'
 
 const payload = await getPayloadInstance()
 
@@ -136,6 +144,31 @@ container.register(
   PRODUCT_CONTROLLER_TOKEN,
   {
     useClass: ProductController,
+  },
+  { lifecycle: Lifecycle.Transient },
+)
+
+// * Order
+container.register(
+  ORDER_REPOSITORY_TOKEN,
+  {
+    useClass: OrderRepository,
+  },
+  { lifecycle: Lifecycle.ContainerScoped },
+)
+
+container.register(
+  ORDER_SERVICE_TOKEN,
+  {
+    useClass: OrderService,
+  },
+  { lifecycle: Lifecycle.Transient },
+)
+
+container.register(
+  ORDER_CONTROLLER_TOKEN,
+  {
+    useClass: OrderController,
   },
   { lifecycle: Lifecycle.Transient },
 )

@@ -73,6 +73,7 @@ export interface Config {
     'variant-names': VariantName;
     'variant-values': VariantValue;
     products: Product;
+    orders: Order;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -85,6 +86,7 @@ export interface Config {
     'variant-names': VariantNamesSelect<false> | VariantNamesSelect<true>;
     'variant-values': VariantValuesSelect<false> | VariantValuesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    orders: OrdersSelect<false> | OrdersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -341,6 +343,160 @@ export interface Product {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: number;
+  /**
+   * Unique order number
+   */
+  orderNumber: string;
+  /**
+   * Session ID of the cart that was converted to this order
+   */
+  cartSessionId?: string | null;
+  /**
+   * Items in the order
+   */
+  items?:
+    | {
+        /**
+         * Reference to the product
+         */
+        product: number | Product;
+        /**
+         * Selected variant options for this product
+         */
+        selectedVariant?:
+          | {
+              variantName: string;
+              variantValue: string;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Price at the time of order
+         */
+        price: number;
+        /**
+         * Quantity of this item ordered
+         */
+        quantity: number;
+        /**
+         * Custom files uploaded by the customer for this item
+         */
+        uploadedFiles?:
+          | {
+              /**
+               * Label of the upload field
+               */
+              fieldLabel: string;
+              /**
+               * Files uploaded by the customer
+               */
+              files?: (number | Media)[] | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Total number of items in the order
+   */
+  totalItems: number;
+  /**
+   * Total amount of the order
+   */
+  totalAmount: number;
+  /**
+   * Current status of the order
+   */
+  status: 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | 'refunded';
+  /**
+   * Customer information
+   */
+  customerInfo: {
+    /**
+     * Customer full name
+     */
+    name: string;
+    /**
+     * Customer email address
+     */
+    email: string;
+    /**
+     * Customer phone number
+     */
+    phone?: string | null;
+  };
+  /**
+   * Shipping address
+   */
+  shippingAddress: {
+    /**
+     * Street address
+     */
+    street: string;
+    /**
+     * City
+     */
+    city: string;
+    /**
+     * State/Province
+     */
+    state: string;
+    /**
+     * Postal/ZIP code
+     */
+    postalCode: string;
+    /**
+     * Country
+     */
+    country: string;
+  };
+  /**
+   * Billing address
+   */
+  billingAddress?: {
+    /**
+     * Use shipping address for billing
+     */
+    sameAsShipping?: boolean | null;
+    /**
+     * Street address
+     */
+    street?: string | null;
+    /**
+     * City
+     */
+    city?: string | null;
+    /**
+     * State/Province
+     */
+    state?: string | null;
+    /**
+     * Postal/ZIP code
+     */
+    postalCode?: string | null;
+    /**
+     * Country
+     */
+    country?: string | null;
+  };
+  /**
+   * Payment status
+   */
+  paymentStatus: 'pending' | 'paid' | 'failed' | 'refunded';
+  /**
+   * Internal notes about the order
+   */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -369,6 +525,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'products';
         value: number | Product;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: number | Order;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -527,6 +687,69 @@ export interface ProductsSelect<T extends boolean = true> {
         maxFiles?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders_select".
+ */
+export interface OrdersSelect<T extends boolean = true> {
+  orderNumber?: T;
+  cartSessionId?: T;
+  items?:
+    | T
+    | {
+        product?: T;
+        selectedVariant?:
+          | T
+          | {
+              variantName?: T;
+              variantValue?: T;
+              id?: T;
+            };
+        price?: T;
+        quantity?: T;
+        uploadedFiles?:
+          | T
+          | {
+              fieldLabel?: T;
+              files?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  totalItems?: T;
+  totalAmount?: T;
+  status?: T;
+  customerInfo?:
+    | T
+    | {
+        name?: T;
+        email?: T;
+        phone?: T;
+      };
+  shippingAddress?:
+    | T
+    | {
+        street?: T;
+        city?: T;
+        state?: T;
+        postalCode?: T;
+        country?: T;
+      };
+  billingAddress?:
+    | T
+    | {
+        sameAsShipping?: T;
+        street?: T;
+        city?: T;
+        state?: T;
+        postalCode?: T;
+        country?: T;
+      };
+  paymentStatus?: T;
+  notes?: T;
   updatedAt?: T;
   createdAt?: T;
 }

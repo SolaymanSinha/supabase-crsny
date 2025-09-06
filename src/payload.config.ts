@@ -13,6 +13,7 @@ import { Categories } from './collections/Categorie'
 import { VariantNames } from './collections/VariantNames'
 import { VariantValues } from './collections/VariantValues'
 import { Product } from './collections/Product'
+import { Order } from './collections/Order'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { WebContents } from './globals/WebContents'
 
@@ -33,7 +34,7 @@ export default buildConfig({
           }
         : false,
   },
-  collections: [Users, Media, Categories, VariantNames, VariantValues, Product],
+  collections: [Users, Media, Categories, VariantNames, VariantValues, Product, Order],
   globals: [Company, WebContents],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
