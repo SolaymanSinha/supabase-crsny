@@ -12,7 +12,6 @@ import {
 import { addToCartAtom, CartItem } from '@/lib/atoms/cart'
 import { toast } from 'sonner'
 import { useAtom } from 'jotai'
-import { Input } from '../ui/input'
 
 /*
  * INFO: User can add-to-cart if variant isn't available (base price) or selected variant is a valid variant
