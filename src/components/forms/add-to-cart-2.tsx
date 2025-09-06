@@ -1,5 +1,5 @@
 'use client'
-import { Product } from '@/payload-types'
+import { Media, Product } from '@/payload-types'
 import React, { useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import {
@@ -9,6 +9,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { addToCartAtom, CartItem } from '@/lib/atoms/cart'
+import { toast } from 'sonner'
+import { useAtom } from 'jotai'
+import { Input } from '../ui/input'
 
 /*
  * INFO: User can add-to-cart if variant isn't available (base price) or selected variant is a valid variant
@@ -16,6 +20,10 @@ import {
 
 const AddToCart2 = ({ product }: { product: Product }) => {
   const { variants } = product
+
+  const [, addToCart] = useAtom(addToCartAtom)
+
+  const [uploadedFiles, setUploadedFiles] = React.useState<CartItem['uploadedFiles']>(undefined)
 
   const [selectedVariants, setSelectedVariants] = React.useState<
     { variantName: string; variantValue: string }[]
@@ -93,8 +101,37 @@ const AddToCart2 = ({ product }: { product: Product }) => {
     console.log('Selected Variant', selectedVariants)
   }, [validVariant, selectedVariants])
 
+  const handleAddToCart = (e: any) => {
+    e.preventDefault()
+
+    try {
+      const cartItem: Omit<CartItem, 'id'> = {
+        productId: String(product.id),
+        productTitle: product.title,
+        productSlug: product.slug,
+        coverImage: product.coverImage
+          ? {
+            id: String((product.coverImage as Media).id),
+            url: (product.coverImage as Media).url || undefined,
+            alt: (product.coverImage as Media).alt,
+          }
+          : undefined,
+        selectedVariant: selectedVariants,
+        price: validVariant?.price ?? 0,
+        quantity: 1,
+        uploadedFiles: uploadedFiles,
+      }
+
+      addToCart(cartItem)
+      toast.success('Product added to cart!')
+    } catch (error) {
+      console.error('Error adding to cart:', error)
+      toast.error('Failed to add product to cart')
+    }
+  }
+
   return (
-    <form>
+    <form onSubmit={(e) => handleAddToCart(e)}>
       <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-5">
         {tuppledVariants.map((variant, index) => {
           return (
@@ -119,10 +156,24 @@ const AddToCart2 = ({ product }: { product: Product }) => {
         })}
       </div>
 
+      {/* TODO: Handle upload files after successful cart add test */}
+
+      {/* <div> */}
+      {/*   <Input */}
+      {/*     type="file" */}
+      {/*     placeholder="Upload files" */}
+      {/*     onChange={(e) => { */}
+      {/*       if (e.target.files && e.target.files.length > 0) { */}
+      {/*         setUploadedFiles({fieldLabel: 'Sinha', }) // always overwrite with the newest file */}
+      {/*       } */}
+      {/*     }} */}
+      {/*   /> */}
+      {/* </div> */}
+
       <Button
+        type="submit"
         className="mt-5 w-full bg-yellow-500"
         disabled={validVariant === null ? true : false}
-        type="submit"
       >
         Add To Cart
       </Button>
@@ -130,7 +181,7 @@ const AddToCart2 = ({ product }: { product: Product }) => {
   )
 }
 
-// Schema for shadcn Form
+// Schema fora shadcn Form
 // const formSchema = z.object({
 //   selectedVariant: z.array(
 //     z.object({
