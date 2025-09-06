@@ -1,17 +1,14 @@
 'use client'
 import { Product } from '@/payload-types'
 import React, { useEffect } from 'react'
-import z from 'zod'
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '../ui/select'
+} from '@/components/ui/select'
 
 /*
  * INFO: User can add-to-cart if variant isn't available (base price) or selected variant is a valid variant
@@ -27,9 +24,6 @@ const AddToCart2 = ({ product }: { product: Product }) => {
   const [validVariant, setValidVariant] = React.useState<
     NonNullable<Product['variants']>[number] | null
   >(null)
-
-  // INFO: Handling the logic for add-to-cart
-  const [isValid, setIsValid] = React.useState<boolean>(false)
 
   const optionMap: Record<string, Set<string>> = {}
 
@@ -87,10 +81,8 @@ const AddToCart2 = ({ product }: { product: Product }) => {
 
     if (result) {
       setValidVariant(result)
-      setIsValid(true)
     } else {
       setValidVariant(null)
-      setIsValid(false)
     }
   }, [selectedVariants])
 
@@ -100,17 +92,6 @@ const AddToCart2 = ({ product }: { product: Product }) => {
 
     console.log('Selected Variant', selectedVariants)
   }, [validVariant, selectedVariants])
-
-  useEffect(() => {
-    if (validVariant) {
-      // Variant is available. So, user can't add-to-cart without selecting the variant
-      setIsValid(false)
-    }
-
-    // else {
-    //   setIsValid(true)
-    // }
-  }, [])
 
   return (
     <form>
@@ -150,25 +131,25 @@ const AddToCart2 = ({ product }: { product: Product }) => {
 }
 
 // Schema for shadcn Form
-const formSchema = z.object({
-  selectedVariant: z.array(
-    z.object({
-      variantName: z.string().min(1, 'Variant name is required'),
-      variantValue: z.string().min(1, 'Please select a variant option'),
-    }),
-  ),
-  quantity: z.number().min(1, 'Quantity must be at least 1'),
-  uploadedFiles: z
-    .array(
-      z.object({
-        fieldLabel: z.string(),
-        files: z.array(z.instanceof(File)),
-      }),
-    )
-    .optional(),
-})
+// const formSchema = z.object({
+//   selectedVariant: z.array(
+//     z.object({
+//       variantName: z.string().min(1, 'Variant name is required'),
+//       variantValue: z.string().min(1, 'Please select a variant option'),
+//     }),
+//   ),
+//   quantity: z.number().min(1, 'Quantity must be at least 1'),
+//   uploadedFiles: z
+//     .array(
+//       z.object({
+//         fieldLabel: z.string(),
+//         files: z.array(z.instanceof(File)),
+//       }),
+//     )
+//     .optional(),
+// })
 
-// Type for form to consume
-type FormData = z.infer<typeof formSchema>
+// // Type for form to consume
+// type FormData = z.infer<typeof formSchema>
 
 export default AddToCart2
