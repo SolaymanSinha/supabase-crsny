@@ -1,5 +1,5 @@
 {
-  "id": "88e17385-f124-4614-83e7-739ca4a8a7a2",
+  "id": "a507ce12-1238-43a7-9d33-859f07d42d28",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -229,6 +229,12 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
+        },
+        "_key": {
+          "name": "_key",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         },
         "prefix": {
           "name": "prefix",
