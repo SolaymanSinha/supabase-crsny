@@ -49,7 +49,7 @@ export default async function FAQsPage() {
 
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-32">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-yellow-500 to-purple-600 rounded-2xl mb-6">
               <svg
                 className="w-8 h-8 text-white"
                 fill="none"
@@ -90,7 +90,7 @@ export default async function FAQsPage() {
                 <div key={categoryIndex} className="mb-16 lg:mb-20">
                   <div className="text-center mb-12">
                     <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-100 to-blue-100 rounded-2xl mb-4">
-                      <span className="text-purple-600 font-bold text-lg">{categoryIndex + 1}</span>
+                      <span className="text-yellow-500 font-bold text-lg">{categoryIndex + 1}</span>
                     </div>
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                       {category.categoryName}
@@ -114,7 +114,7 @@ export default async function FAQsPage() {
                           >
                             <AccordionTrigger className="text-left px-6 sm:px-8 py-6 hover:bg-white/50 transition-colors [&[data-state=open]]:bg-white/70">
                               <div className="flex items-start gap-4 w-full">
-                                <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center mt-1">
+                                <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-yellow-500 to-purple-600 rounded-xl flex items-center justify-center mt-1">
                                   <span className="text-white font-bold text-sm">
                                     {questionIndex + 1}
                                   </span>
@@ -122,12 +122,12 @@ export default async function FAQsPage() {
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-start gap-3 mb-2">
                                     {faq.featured && (
-                                      <span className="flex-shrink-0 bg-gradient-to-r from-purple-500 to-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                                      <span className="flex-shrink-0 bg-gradient-to-r from-yellow-500 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">
                                         ⭐ Featured
                                       </span>
                                     )}
                                   </div>
-                                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 group-hover:text-purple-700 transition-colors leading-relaxed">
+                                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 group-hover:text-purple-500 transition-colors leading-relaxed">
                                     {faq.question}
                                   </h3>
                                 </div>
@@ -157,7 +157,7 @@ export default async function FAQsPage() {
 
           <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-4xl mx-auto">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-yellow-500 to-purple-600 rounded-2xl mb-6">
                 <svg
                   className="w-8 h-8 text-white"
                   fill="none"
@@ -185,7 +185,7 @@ export default async function FAQsPage() {
                   <Button
                     asChild
                     size="lg"
-                    className="bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white border-0 px-8 py-6 text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                    className="bg-gradient-to-r from-yellow-500 to-purple-600 hover:from-yellow-600 hover:to-purple-700 text-white border-0 px-8 py-6 text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                   >
                     <Link href={faqs.contactCTA.buttonLink}>
                       <svg
@@ -252,14 +252,14 @@ export default async function FAQsPage() {
                 Can't find what you're looking for? Try searching our{' '}
                 <Link
                   href="/help"
-                  className="text-purple-600 hover:text-purple-700 font-semibold transition-colors"
+                  className="text-yellow-500 hover:text-yellow-600 font-semibold transition-colors"
                 >
                   help center
                 </Link>{' '}
                 or{' '}
                 <Link
                   href="/contact"
-                  className="text-purple-600 hover:text-purple-700 font-semibold transition-colors"
+                  className="text-yellow-500 hover:text-yellow-600 font-semibold transition-colors"
                 >
                   contact us directly
                 </Link>
