@@ -73,8 +73,8 @@ export default async function AboutPage() {
                   />
                 </div>
                 {/* Floating decoration */}
-                <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full opacity-20 blur-xl" />
-                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-tr from-purple-500 to-pink-600 rounded-full opacity-20 blur-xl" />
+                {/* <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-full opacity-20 blur-xl" /> */}
+                {/* <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-tr from-purple-500 to-pink-600 rounded-full opacity-20 blur-xl" /> */}
               </div>
             )}
           </div>
@@ -96,8 +96,8 @@ export default async function AboutPage() {
                   <div className={`space-y-6 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
                     <div className="space-y-4">
                       <div className="flex items-center space-x-3">
-                        <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"></div>
-                        <span className="text-sm font-semibold text-blue-600 uppercase tracking-wider">
+                        <div className="w-12 h-1 bg-gradient-to-r from-yellow-500 to-purple-600 rounded-full"></div>
+                        <span className="text-sm font-semibold text-yellow-500 uppercase tracking-wider">
                           Section {index + 1}
                         </span>
                       </div>
@@ -144,7 +144,7 @@ export default async function AboutPage() {
 
           <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12 lg:mb-16">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-yellow-500 to-purple-600 rounded-2xl mb-6">
                 <svg
                   className="w-8 h-8 text-white"
                   fill="none"
@@ -188,7 +188,7 @@ export default async function AboutPage() {
 
                     <div className="text-center space-y-3">
                       <h3 className="text-xl lg:text-2xl font-bold text-gray-900">{member.name}</h3>
-                      <p className="text-sm lg:text-base font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full inline-block">
+                      <p className="text-sm lg:text-base font-semibold text-yellow-500 bg-blue-50 px-3 py-1 rounded-full inline-block">
                         {member.position}
                       </p>
                       {member.bio && (
