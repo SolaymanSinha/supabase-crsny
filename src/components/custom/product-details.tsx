@@ -70,7 +70,7 @@ const ProductDetails = ({ product }: { product: Product }) => {
           </div>
 
           {/* <AddToCartForm product={product} /> */}
-          <AddToCart2 product={product} />
+          <AddToCart2 product={product} productPrice={productPrice} setProductPrice={setProductPrice} />
         </div>
       </div>
     </section>

@@ -17,8 +17,8 @@ import { useAtom } from 'jotai'
  * INFO: User can add-to-cart if variant isn't available (base price) or selected variant is a valid variant
  */
 
-const AddToCart2 = ({ product }: { product: Product }) => {
-  const { variants } = product
+const AddToCart2 = ({ product, productPrice, setProductPrice }: { product: Product, productPrice: number, setProductPrice: (price: number) => void }) => {
+  const { variants, basePrice } = product
 
   const [, addToCart] = useAtom(addToCartAtom)
 
@@ -88,6 +88,7 @@ const AddToCart2 = ({ product }: { product: Product }) => {
 
     if (result) {
       setValidVariant(result)
+      setProductPrice(result?.price ?? basePrice)
     } else {
       setValidVariant(null)
     }
@@ -116,7 +117,7 @@ const AddToCart2 = ({ product }: { product: Product }) => {
           }
           : undefined,
         selectedVariant: selectedVariants,
-        price: validVariant?.price ?? 0,
+        price: productPrice,
         quantity: 1,
         uploadedFiles: uploadedFiles,
       }
