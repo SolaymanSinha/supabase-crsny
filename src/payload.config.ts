@@ -30,9 +30,9 @@ export default buildConfig({
     autoLogin:
       process.env.NODE_ENV === 'development'
         ? {
-            email: 'admin@admin.com',
-            password: 'admin',
-          }
+          email: 'admin@admin.com',
+          password: 'admin',
+        }
         : false,
   },
   collections: [Users, Media, Categories, VariantNames, VariantValues, Product, Order],
@@ -76,9 +76,7 @@ export default buildConfig({
     uploadthingStorage({
       clientUploads: true,
       collections: {
-        media: {
-          prefix: 'cms',
-        },
+        media: true,
       },
       options: {
         token: process.env.UPLOADTHING_TOKEN,
