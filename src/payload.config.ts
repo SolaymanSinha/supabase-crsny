@@ -15,6 +15,7 @@ import { VariantValues } from './collections/VariantValues'
 import { Product } from './collections/Product'
 import { Order } from './collections/Order'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 import { WebContents } from './globals/WebContents'
 
 const filename = fileURLToPath(import.meta.url)
@@ -49,22 +50,38 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
+    // INFO: Previously using supbase storage. But the free tier isn't enough the load of the connection of DB. So switched to NeonDB + Uploadthing
+    //
     // storage-adapter-placeholder
-    s3Storage({
+    // s3Storage({
+    //   collections: {
+    //     media: {
+    //       prefix: 'cms',
+    //     },
+    //   },
+    //   bucket: process.env.S3_BUCKET || '',
+    //   config: {
+    //     endpoint: process.env.S3_ENDPOINT || '',
+    //     credentials: {
+    //       accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+    //       secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+    //     },
+    //     region: process.env.S3_REGION || '',
+    //     forcePathStyle: true,
+    //   },
+    // }),
+    //
+    //
+    // INFO: Uploadthing Storage Adapter
+    uploadthingStorage({
       collections: {
         media: {
           prefix: 'cms',
         },
       },
-      bucket: process.env.S3_BUCKET || '',
-      config: {
-        endpoint: process.env.S3_ENDPOINT || '',
-        credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
-        },
-        region: process.env.S3_REGION || '',
-        forcePathStyle: true,
+      options: {
+        token: process.env.UPLOADTHING_TOKEN,
+        acl: 'public-read',
       },
     }),
   ],
