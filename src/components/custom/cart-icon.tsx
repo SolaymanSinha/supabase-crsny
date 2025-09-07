@@ -12,14 +12,18 @@ export const CartIcon = () => {
 
   return (
     <Link href="/cart">
-      <Button variant="outline" size="sm" className="relative">
+      <Button
+        variant="outline"
+        size="sm"
+        className="relative hover:bg-yellow-50 hover:border-yellow-500 transition-colors"
+      >
         <ShoppingCart className="w-4 h-4" />
         {cartTotals.totalItems > 0 && (
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-            {cartTotals.totalItems}
+          <span className="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold shadow-lg">
+            {cartTotals.totalItems > 99 ? '99+' : cartTotals.totalItems}
           </span>
         )}
-        <span className="ml-2">Cart</span>
+        <span className="ml-2 hidden sm:inline">Cart</span>
       </Button>
     </Link>
   )

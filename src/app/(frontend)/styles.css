@@ -12,6 +12,12 @@ html {
 body {
   width: 100%;
 }
+
+a,
+button {
+  cursor: pointer;
+}
+
 :root {
   --font-mono: 'Roboto Mono', monospace;
   --radius: 0.625rem;

@@ -9,9 +9,10 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
-import { Search, HelpCircle, Users, Phone, Menu } from 'lucide-react'
-// import CartSidebar from './cart-sidebar'
+import { Search, HelpCircle, Users, Phone, Menu, ShoppingCart } from 'lucide-react'
+import { CartIcon } from './cart-icon'
 import Image from 'next/image'
+import Link from 'next/link'
 import { fallbackImageURL, getFullURL } from '@/lib/utils/url'
 import { Category, Company } from '@/payload-types'
 
@@ -36,41 +37,51 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
             {/* Logo - Mobile/Tablet only */}
             <div className="flex lg:hidden items-center space-x-2">
               {typeof logo === 'object' && (
-                <Image
-                  src={getFullURL(logo?.url) || fallbackImageURL({ width: 32, height: 32 })}
-                  alt={name || 'Name'}
-                  width={32}
-                  height={32}
-                  unoptimized
-                  className="w-8 h-8 object-contain"
-                />
+                <Link href={'/'}>
+                  <Image
+                    src={getFullURL(logo?.url) || fallbackImageURL({ width: 32, height: 32 })}
+                    alt={name || 'Name'}
+                    width={100}
+                    height={80}
+                    className="w-28 h-16 object-contain rounded"
+                  />
+                </Link>
               )}
-              <span className="text-lg lg:text-xl font-semibold text-black">
-                {companyInfo?.name || 'Name'}
-              </span>
+              {/* <span className="text-lg lg:text-xl font-semibold text-black"> */}
+              {/*   {companyInfo?.name || 'Name'} */}
+              {/* </span> */}
             </div>
 
             {/* Desktop Navigation Links */}
             <div className="hidden lg:flex items-center space-x-6">
-              <a href="#" className="flex items-center space-x-2 text-black hover:text-gray-600">
+              <Link
+                href="/about"
+                className="flex items-center space-x-2 text-black hover:text-yellow-500 transition-colors"
+              >
                 <Users className="w-5 h-5" />
                 <span className="font-medium">About Us</span>
-              </a>
-              <a href="#" className="flex items-center space-x-2 text-black hover:text-gray-600">
-                <Users className="w-5 h-5" />
+              </Link>
+              <Link
+                href="/contact"
+                className="flex items-center space-x-2 text-black hover:text-yellow-500 transition-colors"
+              >
+                <Phone className="w-5 h-5" />
                 <span className="font-medium">Contact Us</span>
-              </a>
-              <a href="#" className="flex items-center space-x-2 text-black hover:text-gray-600">
+              </Link>
+              <Link
+                href="/faqs"
+                className="flex items-center space-x-2 text-black hover:text-yellow-500 transition-colors"
+              >
                 <HelpCircle className="w-5 h-5" />
                 <span className="font-medium">FAQs</span>
-              </a>
+              </Link>
             </div>
           </div>
 
           {/* Right - Cart, Login, Sign Up */}
           <div className="flex items-center space-x-2 lg:space-x-4">
             {/* Cart */}
-            {/* <CartSidebar /> */}
+            <CartIcon />
 
             {/* Login - Hidden on mobile */}
             {/* <Button variant="ghost" className="hidden md:block">
@@ -112,27 +123,27 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
                     <div>
                       <h3 className="text-sm font-semibold text-gray-900 mb-3">Quick Links</h3>
                       <div className="space-y-2">
-                        <a
-                          href="#"
+                        <Link
+                          href="/about"
                           className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
                         >
-                          <Users className="w-5 h-5 text-blue-600" />
+                          <Users className="w-5 h-5 text-yellow-500" />
                           <span className="font-medium text-gray-900">About Us</span>
-                        </a>
-                        <a
-                          href="#"
+                        </Link>
+                        <Link
+                          href="/contact"
                           className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
                         >
-                          <Users className="w-5 h-5 text-green-600" />
+                          <Phone className="w-5 h-5 text-yellow-500" />
                           <span className="font-medium text-gray-900">Contact Us</span>
-                        </a>
-                        <a
-                          href="#"
+                        </Link>
+                        <Link
+                          href="/faqs"
                           className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
                         >
-                          <HelpCircle className="w-5 h-5 text-purple-600" />
+                          <HelpCircle className="w-5 h-5 text-yellow-500" />
                           <span className="font-medium text-gray-900">FAQs</span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
 
@@ -237,15 +248,17 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
             {/* Logo - Desktop only */}
             <div className="hidden lg:flex items-center space-x-2">
               {typeof logo === 'object' && (
-                <Image
-                  src={getFullURL(logo?.url) || fallbackImageURL({ width: 32, height: 32 })}
-                  alt={name || 'Company Logo'}
-                  width={32}
-                  height={32}
-                  className="w-8 h-8 object-contain bg-white rounded"
-                />
+                <Link href={'/'}>
+                  <Image
+                    src={getFullURL(logo?.url) || fallbackImageURL({ width: 32, height: 32 })}
+                    alt={name || 'Company Logo'}
+                    width={180}
+                    height={80}
+                    className="w-42 h-16 bg-white object-contain rounded"
+                  />
+                </Link>
               )}
-              <span className="text-xl font-semibold text-white">{name || 'Logo'}</span>
+              {/* <span className="text-xl font-semibold text-white">{name || 'Logo'}</span> */}
             </div>
 
             {/* Center - Search */}
