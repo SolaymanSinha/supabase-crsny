@@ -169,13 +169,23 @@ const AddToCart2 = ({ product }: { product: Product }) => {
       {/*   /> */}
       {/* </div> */}
 
-      <Button
-        type="submit"
-        className="mt-5 w-full bg-yellow-500"
-        disabled={validVariant === null ? true : false}
-      >
-        Add To Cart
-      </Button>
+      {/* INFO: If variant exists then disable/enable the buttton based on valid variant */}
+      {tuppledVariants.length > 0 && (
+        <Button
+          type="submit"
+          className="mt-5 w-full bg-yellow-500"
+          disabled={validVariant === null ? true : false}
+        >
+          Add To Cart
+        </Button>
+      )}
+
+      {/* INFO: If variant doesn't exists than the button is always enabled */}
+      {tuppledVariants.length === 0 && (
+        <Button type="submit" className="mt-5 w-full bg-yellow-500">
+          Add To Cart
+        </Button>
+      )}
     </form>
   )
 }
