@@ -42,7 +42,7 @@ export default async function ContactPage() {
 
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-32">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-green-600 rounded-2xl mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-yellow-500 to-purple-600 rounded-2xl mb-6">
               <svg
                 className="w-8 h-8 text-white"
                 fill="none"
@@ -82,8 +82,8 @@ export default async function ContactPage() {
             <div className="space-y-8">
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-green-600 rounded-full"></div>
-                  <span className="text-sm font-semibold text-blue-600 uppercase tracking-wider">
+                  <div className="w-12 h-1 bg-gradient-to-r from-yellow-500 to-purple-600 rounded-full"></div>
+                  <span className="text-sm font-semibold text-yellow-500 uppercase tracking-wider">
                     Contact Info
                   </span>
                 </div>
@@ -101,7 +101,7 @@ export default async function ContactPage() {
                 {contactUs.contactInfo?.address && (
                   <div className="bg-gradient-to-br from-blue-50 to-green-50 rounded-2xl p-6 hover:shadow-lg transition-shadow duration-300">
                     <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-green-600 rounded-xl flex items-center justify-center">
+                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-yellow-500 to-purple-600 rounded-xl flex items-center justify-center">
                         <svg
                           className="w-6 h-6 text-white"
                           fill="none"
@@ -149,7 +149,7 @@ export default async function ContactPage() {
                 {contactUs.contactInfo?.phone && (
                   <div className="bg-gradient-to-br from-green-50 to-blue-50 rounded-2xl p-6 hover:shadow-lg transition-shadow duration-300">
                     <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-green-500 to-blue-600 rounded-xl flex items-center justify-center">
+                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-yellow-500 to-purple-600 rounded-xl flex items-center justify-center">
                         <svg
                           className="w-6 h-6 text-white"
                           fill="none"
@@ -168,7 +168,7 @@ export default async function ContactPage() {
                         <h3 className="font-bold text-gray-900 mb-2 text-lg">Call Us</h3>
                         <a
                           href={`tel:${contactUs.contactInfo.phone}`}
-                          className="text-blue-600 hover:text-blue-700 transition-colors font-semibold text-lg"
+                          className="text-yellow-500 hover:text-yellow-700 transition-colors font-semibold text-lg"
                         >
                           {contactUs.contactInfo.phone}
                         </a>
@@ -180,7 +180,7 @@ export default async function ContactPage() {
                 {contactUs.contactInfo?.email && (
                   <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-6 hover:shadow-lg transition-shadow duration-300">
                     <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center">
+                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-yellow-500 to-purple-600 rounded-xl flex items-center justify-center">
                         <svg
                           className="w-6 h-6 text-white"
                           fill="none"
@@ -199,7 +199,7 @@ export default async function ContactPage() {
                         <h3 className="font-bold text-gray-900 mb-2 text-lg">Email Us</h3>
                         <a
                           href={`mailto:${contactUs.contactInfo.email}`}
-                          className="text-blue-600 hover:text-blue-700 transition-colors font-semibold text-lg"
+                          className="text-yellow-500 hover:text-yellow-700 transition-colors font-semibold text-lg"
                         >
                           {contactUs.contactInfo.email}
                         </a>
@@ -215,7 +215,7 @@ export default async function ContactPage() {
                   <div className="bg-gray-50 rounded-2xl p-6">
                     <h3 className="font-bold text-gray-900 mb-6 text-lg flex items-center">
                       <svg
-                        className="w-5 h-5 mr-2 text-blue-600"
+                        className="w-5 h-5 mr-2 text-yellow-500"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -253,8 +253,8 @@ export default async function ContactPage() {
               <div className="bg-white rounded-3xl shadow-2xl ring-1 ring-black/5 p-8 lg:p-10">
                 <div className="space-y-4 mb-8">
                   <div className="flex items-center space-x-3">
-                    <div className="w-12 h-1 bg-gradient-to-r from-green-500 to-blue-600 rounded-full"></div>
-                    <span className="text-sm font-semibold text-green-600 uppercase tracking-wider">
+                    <div className="w-12 h-1 bg-gradient-to-r from-yellow-500 to-purple-600 rounded-full"></div>
+                    <span className="text-sm font-semibold text-yellow-500 uppercase tracking-wider">
                       Contact Form
                     </span>
                   </div>
