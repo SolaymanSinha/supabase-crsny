@@ -17,6 +17,7 @@ import { Order } from './collections/Order'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 import { WebContents } from './globals/WebContents'
+import { Pages } from './globals/Pages'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -30,13 +31,13 @@ export default buildConfig({
     autoLogin:
       process.env.NODE_ENV === 'development'
         ? {
-          email: 'admin@admin.com',
-          password: 'admin',
-        }
+            email: 'admin@admin.com',
+            password: 'admin',
+          }
         : false,
   },
   collections: [Users, Media, Categories, VariantNames, VariantValues, Product, Order],
-  globals: [Company, WebContents],
+  globals: [Company, WebContents, Pages],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

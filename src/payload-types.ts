@@ -97,10 +97,12 @@ export interface Config {
   globals: {
     company: Company;
     'web-contents': WebContent;
+    pages: Page;
   };
   globalsSelect: {
     company: CompanySelect<false> | CompanySelect<true>;
     'web-contents': WebContentsSelect<false> | WebContentsSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
   };
   locale: null;
   user: User & {
@@ -890,6 +892,191 @@ export interface WebContent {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  aboutUs: {
+    enabled?: boolean | null;
+    title: string;
+    subtitle?: string | null;
+    heroImage?: (number | null) | Media;
+    content: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    sections?:
+      | {
+          sectionTitle: string;
+          sectionContent: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          };
+          sectionImage?: (number | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+    team?:
+      | {
+          name: string;
+          position: string;
+          bio?: string | null;
+          image?: (number | null) | Media;
+          socialLinks?: {
+            linkedin?: string | null;
+            twitter?: string | null;
+            email?: string | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    seo?: {
+      metaTitle?: string | null;
+      metaDescription?: string | null;
+    };
+  };
+  contactUs: {
+    enabled?: boolean | null;
+    title: string;
+    subtitle?: string | null;
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    contactInfo?: {
+      address?: {
+        street?: string | null;
+        city?: string | null;
+        state?: string | null;
+        postalCode?: string | null;
+        country?: string | null;
+      };
+      phone?: string | null;
+      email?: string | null;
+      businessHours?:
+        | {
+            day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+            hours: string;
+            closed?: boolean | null;
+            id?: string | null;
+          }[]
+        | null;
+    };
+    contactForm: {
+      enabled?: boolean | null;
+      formTitle?: string | null;
+      formDescription?: string | null;
+      recipientEmail: string;
+      successMessage?: string | null;
+    };
+    map?: {
+      enabled?: boolean | null;
+      embedUrl?: string | null;
+    };
+    seo?: {
+      metaTitle?: string | null;
+      metaDescription?: string | null;
+    };
+  };
+  faqs: {
+    enabled?: boolean | null;
+    title: string;
+    subtitle?: string | null;
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    categories?:
+      | {
+          categoryName: string;
+          categoryDescription?: string | null;
+          questions?:
+            | {
+                question: string;
+                answer: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                };
+                featured?: boolean | null;
+                order?: number | null;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+    contactCTA?: {
+      enabled?: boolean | null;
+      title?: string | null;
+      description?: string | null;
+      buttonText?: string | null;
+      buttonLink?: string | null;
+    };
+    seo?: {
+      metaTitle?: string | null;
+      metaDescription?: string | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "company_select".
  */
 export interface CompanySelect<T extends boolean = true> {
@@ -957,6 +1144,145 @@ export interface WebContentsSelect<T extends boolean = true> {
         freeProofsDescription?: T;
         businessHoursDescription?: T;
         copyright?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  aboutUs?:
+    | T
+    | {
+        enabled?: T;
+        title?: T;
+        subtitle?: T;
+        heroImage?: T;
+        content?: T;
+        sections?:
+          | T
+          | {
+              sectionTitle?: T;
+              sectionContent?: T;
+              sectionImage?: T;
+              id?: T;
+            };
+        team?:
+          | T
+          | {
+              name?: T;
+              position?: T;
+              bio?: T;
+              image?: T;
+              socialLinks?:
+                | T
+                | {
+                    linkedin?: T;
+                    twitter?: T;
+                    email?: T;
+                  };
+              id?: T;
+            };
+        seo?:
+          | T
+          | {
+              metaTitle?: T;
+              metaDescription?: T;
+            };
+      };
+  contactUs?:
+    | T
+    | {
+        enabled?: T;
+        title?: T;
+        subtitle?: T;
+        description?: T;
+        contactInfo?:
+          | T
+          | {
+              address?:
+                | T
+                | {
+                    street?: T;
+                    city?: T;
+                    state?: T;
+                    postalCode?: T;
+                    country?: T;
+                  };
+              phone?: T;
+              email?: T;
+              businessHours?:
+                | T
+                | {
+                    day?: T;
+                    hours?: T;
+                    closed?: T;
+                    id?: T;
+                  };
+            };
+        contactForm?:
+          | T
+          | {
+              enabled?: T;
+              formTitle?: T;
+              formDescription?: T;
+              recipientEmail?: T;
+              successMessage?: T;
+            };
+        map?:
+          | T
+          | {
+              enabled?: T;
+              embedUrl?: T;
+            };
+        seo?:
+          | T
+          | {
+              metaTitle?: T;
+              metaDescription?: T;
+            };
+      };
+  faqs?:
+    | T
+    | {
+        enabled?: T;
+        title?: T;
+        subtitle?: T;
+        description?: T;
+        categories?:
+          | T
+          | {
+              categoryName?: T;
+              categoryDescription?: T;
+              questions?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    featured?: T;
+                    order?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        contactCTA?:
+          | T
+          | {
+              enabled?: T;
+              title?: T;
+              description?: T;
+              buttonText?: T;
+              buttonLink?: T;
+            };
+        seo?:
+          | T
+          | {
+              metaTitle?: T;
+              metaDescription?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
