@@ -91,8 +91,8 @@ export default async function ContactPage() {
                   Get in Touch
                 </h2>
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  We'd love to hear from you. Send us a message and we'll respond as soon as
-                  possible.
+                  We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon
+                  as possible.
                 </p>
               </div>
 
@@ -310,7 +310,8 @@ export default async function ContactPage() {
                 Find Us Here
               </h2>
               <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                Visit our office for a face-to-face conversation. We're always happy to welcome you.
+                Visit our office for a face-to-face conversation. We&apos;re always happy to welcome
+                you.
               </p>
             </div>
 

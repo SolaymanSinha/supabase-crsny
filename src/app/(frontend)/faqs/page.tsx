@@ -249,7 +249,7 @@ export default async function FAQsPage() {
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Still Need Help?</h3>
               <p className="text-gray-600 mb-4">
-                Can't find what you're looking for? Try searching our{' '}
+                Can&apos;t find what you&apos;re looking for? Try searching our{' '}
                 <Link
                   href="/help"
                   className="text-yellow-500 hover:text-yellow-600 font-semibold transition-colors"
