@@ -1,24 +1,35 @@
 import { getContactUs } from '@/functions/pages.function'
+import { getCompany } from '@/functions/company.function'
+import { generatePageSEO } from '@/lib/utils/seo'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import ContactForm from '@/components/forms/contact-form'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const response = await getContactUs()
+  try {
+    const [pagesResponse, companyResponse] = await Promise.all([getContactUs(), getCompany()])
 
-  if (!response.success || !response.data) {
+    if (!pagesResponse.success || !pagesResponse.data) {
+      return {
+        title: 'Contact Us',
+        description: 'Get in touch with our team.',
+      }
+    }
+
+    // Use enhanced SEO utility with CMS data
+    const contactUsData = {
+      title: pagesResponse.data.seo?.metaTitle || pagesResponse.data.title,
+      description: pagesResponse.data.seo?.metaDescription || pagesResponse.data.description,
+    }
+
+    return generatePageSEO('contactUs', contactUsData, companyResponse.data || undefined)
+  } catch (error) {
+    console.error('Error generating contact page metadata:', error)
     return {
       title: 'Contact Us',
       description: 'Get in touch with our team.',
     }
-  }
-
-  const contactUs = response.data
-
-  return {
-    title: contactUs.seo?.metaTitle || contactUs.title || 'Contact Us',
-    description: contactUs.seo?.metaDescription || 'Get in touch with our team.',
   }
 }
 

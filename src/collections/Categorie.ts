@@ -64,5 +64,35 @@ export const Categories: CollectionConfig = {
         description: 'Mark as featured category',
       },
     },
+    {
+      name: 'seo',
+      type: 'group',
+      admin: {
+        description: 'SEO settings for category pages',
+      },
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          admin: {
+            description: 'SEO title (if different from category name)',
+          },
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          admin: {
+            description: 'SEO meta description for category pages',
+          },
+        },
+        {
+          name: 'keywords',
+          type: 'text',
+          admin: {
+            description: 'SEO keywords (comma-separated)',
+          },
+        },
+      ],
+    },
   ],
 }

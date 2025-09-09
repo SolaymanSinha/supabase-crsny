@@ -176,7 +176,7 @@ export const Company: GlobalConfig = {
     {
       name: 'seo',
       type: 'group',
-      label: 'SEO Information',
+      label: 'SEO Information (For Home Page)',
       fields: [
         {
           name: 'metaTitle',

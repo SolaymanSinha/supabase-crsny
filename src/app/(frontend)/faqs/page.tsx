@@ -1,4 +1,6 @@
 import { getFaqs } from '@/functions/pages.function'
+import { getCompany } from '@/functions/company.function'
+import { generatePageSEO } from '@/lib/utils/seo'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
@@ -12,20 +14,29 @@ import { Button } from '@/components/ui/button'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const response = await getFaqs()
+  try {
+    const [pagesResponse, companyResponse] = await Promise.all([getFaqs(), getCompany()])
 
-  if (!response.success || !response.data) {
+    if (!pagesResponse.success || !pagesResponse.data) {
+      return {
+        title: 'FAQs',
+        description: 'Frequently asked questions and answers.',
+      }
+    }
+
+    // Use enhanced SEO utility with CMS data
+    const faqsData = {
+      title: pagesResponse.data.seo?.metaTitle || pagesResponse.data.title,
+      description: pagesResponse.data.seo?.metaDescription || pagesResponse.data.description,
+    }
+
+    return generatePageSEO('faqs', faqsData, companyResponse.data || undefined)
+  } catch (error) {
+    console.error('Error generating FAQs page metadata:', error)
     return {
       title: 'FAQs',
       description: 'Frequently asked questions and answers.',
     }
-  }
-
-  const faqs = response.data
-
-  return {
-    title: faqs.seo?.metaTitle || faqs.title || 'FAQs',
-    description: faqs.seo?.metaDescription || 'Frequently asked questions and answers.',
   }
 }
 

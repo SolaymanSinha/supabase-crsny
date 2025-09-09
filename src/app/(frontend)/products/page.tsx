@@ -4,6 +4,7 @@ import { searchProducts } from '@/functions/product.function'
 import { getCompany } from '@/functions/company.function'
 import { getAllCategories } from '@/functions/category.function'
 import { ProductSearchParams } from '@/repositories/product.repository'
+import { generateProductsListingSEO } from '@/lib/utils/seo'
 import ProductsPageClient from '@/components/custom/products-page-client'
 
 interface SearchParams {
@@ -20,19 +21,25 @@ interface ProductsPageProps {
   searchParams: Promise<SearchParams>
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const companyResponse = await getCompany()
-  const companyName = companyResponse.data?.name || 'Store'
+export async function generateMetadata({ searchParams }: ProductsPageProps): Promise<Metadata> {
+  const resolvedSearchParams = await searchParams
 
-  return {
-    title: `Products - ${companyName}`,
-    description: `Browse our complete collection of high-quality products. Find exactly what you're looking for with advanced search and filtering options.`,
-    keywords: 'products, search, filter, browse, shop, categories',
-    openGraph: {
-      title: `Products - ${companyName}`,
-      description: `Browse our complete collection of high-quality products.`,
-      type: 'website',
-    },
+  try {
+    const companyResponse = await getCompany()
+
+    // Transform search params for SEO function
+    const seoSearchParams = {
+      search: resolvedSearchParams.search,
+      category: resolvedSearchParams.category,
+    }
+
+    return generateProductsListingSEO(seoSearchParams, companyResponse.data || undefined)
+  } catch (error) {
+    console.error('Error generating products metadata:', error)
+    return {
+      title: 'Products',
+      description: 'Browse our complete collection of high-quality products.',
+    }
   }
 }
 

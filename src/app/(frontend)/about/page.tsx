@@ -1,4 +1,6 @@
 import { getAboutUs } from '@/functions/pages.function'
+import { getCompany } from '@/functions/company.function'
+import { generatePageSEO } from '@/lib/utils/seo'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -7,20 +9,29 @@ import { Metadata } from 'next'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const response = await getAboutUs()
+  try {
+    const [pagesResponse, companyResponse] = await Promise.all([getAboutUs(), getCompany()])
 
-  if (!response.success || !response.data) {
+    if (!pagesResponse.success || !pagesResponse.data) {
+      return {
+        title: 'About Us',
+        description: 'Learn more about our company and team.',
+      }
+    }
+
+    // Use enhanced SEO utility with CMS data
+    const aboutUsData = {
+      title: pagesResponse.data.seo?.metaTitle || pagesResponse.data.title,
+      subtitle: pagesResponse.data.seo?.metaDescription || pagesResponse.data.subtitle,
+    }
+
+    return generatePageSEO('aboutUs', aboutUsData, companyResponse.data || undefined)
+  } catch (error) {
+    console.error('Error generating about page metadata:', error)
     return {
       title: 'About Us',
       description: 'Learn more about our company and team.',
     }
-  }
-
-  const aboutUs = response.data
-
-  return {
-    title: aboutUs.seo?.metaTitle || aboutUs.title || 'About Us',
-    description: aboutUs.seo?.metaDescription || 'Learn more about our company and team.',
   }
 }
 

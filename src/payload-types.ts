@@ -201,6 +201,23 @@ export interface Category {
    * Mark as featured category
    */
   featured?: boolean | null;
+  /**
+   * SEO settings for category pages
+   */
+  seo?: {
+    /**
+     * SEO title (if different from category name)
+     */
+    title?: string | null;
+    /**
+     * SEO meta description for category pages
+     */
+    description?: string | null;
+    /**
+     * SEO keywords (comma-separated)
+     */
+    keywords?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -625,6 +642,13 @@ export interface CategoriesSelect<T extends boolean = true> {
   description?: T;
   image?: T;
   featured?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        keywords?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
