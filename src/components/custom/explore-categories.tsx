@@ -1,5 +1,4 @@
 import React from 'react'
-import { H1 } from '../ui/h1'
 import {
   Carousel,
   CarouselContent,
@@ -12,6 +11,7 @@ import { Category } from '@/payload-types'
 import Image from 'next/image'
 import { fallbackImageURL, getFullURL } from '@/lib/utils/url'
 import SectionHeading from './section-heading'
+import Link from 'next/link'
 
 const ExploreCategories = ({ categories }: { categories: Category[] }) => {
   return (
@@ -34,7 +34,7 @@ const ExploreCategories = ({ categories }: { categories: Category[] }) => {
                 key={category.id}
                 className="pl-2 sm:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
               >
-                <a className="group cursor-pointer block" href={`/categories/${category.slug}`}>
+                <Link className="group cursor-pointer block" href={`/products?category=${category.slug}`}>
                   {/* Category Image */}
                   <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-gray-100 mb-3 sm:mb-4">
                     {category.image ? (
@@ -60,7 +60,7 @@ const ExploreCategories = ({ categories }: { categories: Category[] }) => {
                       {category.name}
                     </p>
                   </div>
-                </a>
+                </Link>
               </CarouselItem>
             ))}
           </CarouselContent>
