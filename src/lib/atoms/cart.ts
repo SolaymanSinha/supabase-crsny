@@ -1,9 +1,26 @@
 import { atom } from 'jotai'
 import { atomWithStorage } from 'jotai/utils'
 
+// Note: File cleanup is no longer needed since we store uploaded file metadata instead of File objects
+
 export interface CartVariantOption {
   variantName: string
   variantValue: string
+}
+
+export interface UploadedFileData {
+  id: string // Payload CMS media ID (string that will be converted to number for orders)
+  filename: string
+  url?: string
+  mimeType?: string
+  filesize?: number
+}
+
+export interface CartUploadField {
+  fieldLabel: string
+  required: boolean
+  maxFiles: number
+  files: UploadedFileData[]
 }
 
 export interface CartItem {
@@ -19,10 +36,7 @@ export interface CartItem {
   selectedVariant: CartVariantOption[]
   price: number
   quantity: number
-  uploadedFiles?: {
-    fieldLabel: string
-    files: File[]
-  }[]
+  uploadedFiles?: CartUploadField[]
 }
 
 export interface Cart {
@@ -141,4 +155,3 @@ export const clearCartAtom = atom(null, (get, set) => {
     totalPrice: 0,
   })
 })
-

@@ -166,7 +166,8 @@ export const AddToCartForm = ({ product }: { product: Product }) => {
         selectedVariant: values.selectedVariant,
         price: selectedPrice,
         quantity: values.quantity,
-        uploadedFiles: values.uploadedFiles,
+        // Note: This component is deprecated - use AddToCart2 instead
+        uploadedFiles: [], // Simplified since this form is not used
       }
 
       addToCart(cartItem)

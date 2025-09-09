@@ -1,6 +1,6 @@
 'use client'
 import { Media, Product } from '@/payload-types'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -9,7 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { addToCartAtom, CartItem } from '@/lib/atoms/cart'
+import { addToCartAtom, CartItem, CartUploadField, UploadedFileData } from '@/lib/atoms/cart'
+import { FileUpload, UploadedFile } from '@/components/ui/file-upload'
 import { toast } from 'sonner'
 import { useAtom } from 'jotai'
 
@@ -17,12 +18,25 @@ import { useAtom } from 'jotai'
  * INFO: User can add-to-cart if variant isn't available (base price) or selected variant is a valid variant
  */
 
-const AddToCart2 = ({ product, productPrice, setProductPrice }: { product: Product, productPrice: number, setProductPrice: (price: number) => void }) => {
-  const { variants, basePrice } = product
+const AddToCart2 = ({
+  product,
+  productPrice,
+  setProductPrice,
+}: {
+  product: Product
+  productPrice: number
+  setProductPrice: (price: number) => void
+}) => {
+  const { variants, basePrice, uploadFields } = product
 
   const [, addToCart] = useAtom(addToCartAtom)
 
-  const [uploadedFiles, setUploadedFiles] = React.useState<CartItem['uploadedFiles']>(undefined)
+  // State for uploaded files organized by upload field (temporary before upload)
+  const [pendingFiles, setPendingFiles] = useState<Record<string, UploadedFile[]>>({})
+  // State for successfully uploaded files with their CMS IDs
+  const [uploadedFiles, setUploadedFiles] = useState<Record<string, UploadedFileData[]>>({})
+  const [uploadErrors, setUploadErrors] = useState<Record<string, string>>({})
+  const [isUploading, setIsUploading] = useState<Record<string, boolean>>({})
 
   const [selectedVariants, setSelectedVariants] = React.useState<
     { variantName: string; variantValue: string }[]
@@ -97,12 +111,141 @@ const AddToCart2 = ({ product, productPrice, setProductPrice }: { product: Produ
   // React’s setState (useState) is asynchronous, So, use useEffect() to monitor and log the latest value
   useEffect(() => {
     console.log('Valid Variant', validVariant)
-
     console.log('Selected Variant', selectedVariants)
   }, [validVariant, selectedVariants])
 
+  // Handle file upload for a specific field - upload immediately to CMS
+  const handleFileUpload = async (fieldLabel: string, files: UploadedFile[]) => {
+    // Store pending files temporarily
+    setPendingFiles((prev) => ({
+      ...prev,
+      [fieldLabel]: files,
+    }))
+
+    // Clear any previous error for this field
+    setUploadErrors((prev) => ({
+      ...prev,
+      [fieldLabel]: '',
+    }))
+
+    if (files.length === 0) {
+      setUploadedFiles((prev) => ({
+        ...prev,
+        [fieldLabel]: [],
+      }))
+      return
+    }
+
+    // Start uploading
+    setIsUploading((prev) => ({ ...prev, [fieldLabel]: true }))
+
+    try {
+      // Upload files directly using fetch
+      const uploadedFileData: UploadedFileData[] = []
+
+      for (const fileToUpload of files) {
+        const formData = new FormData()
+        formData.append('fieldLabel', fieldLabel)
+        formData.append('file_0', fileToUpload.file)
+
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        })
+
+        if (!response.ok) {
+          const errorData = await response.json()
+          throw new Error(errorData.error || 'Upload failed')
+        }
+
+        const result = await response.json()
+
+        if (!result.success) {
+          throw new Error(result.error || 'Upload failed')
+        }
+
+        // Add uploaded file info to the array
+        result.data.uploadedFiles.forEach((file: any) => {
+          uploadedFileData.push({
+            id: file.id,
+            filename: file.filename || 'Unknown',
+            url: file.url,
+            mimeType: file.mimeType,
+            filesize: file.filesize,
+          })
+        })
+      }
+
+      setUploadedFiles((prev) => ({
+        ...prev,
+        [fieldLabel]: uploadedFileData,
+      }))
+
+      toast.success(`${uploadedFileData.length} file(s) uploaded successfully`)
+    } catch (error) {
+      console.error(`Error uploading files for ${fieldLabel}:`, error)
+      const errorMessage = error instanceof Error ? error.message : 'Upload failed'
+      setUploadErrors((prev) => ({
+        ...prev,
+        [fieldLabel]: errorMessage,
+      }))
+      toast.error(`Upload failed: ${errorMessage}`)
+    } finally {
+      setIsUploading((prev) => ({ ...prev, [fieldLabel]: false }))
+    }
+  }
+
+  // Validate upload fields before adding to cart
+  const validateUploadFields = (): boolean => {
+    if (!uploadFields || uploadFields.length === 0) return true
+
+    const errors: Record<string, string> = {}
+    let isValid = true
+
+    uploadFields.forEach((field) => {
+      const fieldFiles = uploadedFiles[field.label] || []
+      const isCurrentlyUploading = isUploading[field.label]
+
+      if (isCurrentlyUploading) {
+        errors[field.label] = `${field.label} is still uploading, please wait`
+        isValid = false
+      } else if (field.required && fieldFiles.length === 0) {
+        errors[field.label] = `${field.label} is required`
+        isValid = false
+      } else if (fieldFiles.length > (field.maxFiles || 1)) {
+        errors[field.label] = `Maximum ${field.maxFiles || 1} file(s) allowed for ${field.label}`
+        isValid = false
+      }
+    })
+
+    setUploadErrors(errors)
+    return isValid
+  }
+
+  // Convert uploaded files to CartUploadField format for cart storage
+  const prepareUploadedFiles = (): CartUploadField[] => {
+    if (!uploadFields || uploadFields.length === 0) return []
+
+    return uploadFields.map((field) => {
+      const fieldFiles = uploadedFiles[field.label] || []
+
+      return {
+        fieldLabel: field.label,
+        required: field.required || false,
+        maxFiles: field.maxFiles || 1,
+        files: fieldFiles, // These are already UploadedFileData with CMS IDs
+      }
+    })
+  }
+
   const handleAddToCart = (e: any) => {
     e.preventDefault()
+
+    // Validate upload fields first
+    if (!validateUploadFields()) {
+      toast.error('Please fix upload field errors before adding to cart')
+      return
+    }
 
     try {
       const cartItem: Omit<CartItem, 'id'> = {
@@ -111,18 +254,20 @@ const AddToCart2 = ({ product, productPrice, setProductPrice }: { product: Produ
         productSlug: product.slug,
         coverImage: product.coverImage
           ? {
-            id: String((product.coverImage as Media).id),
-            url: (product.coverImage as Media).url || undefined,
-            alt: (product.coverImage as Media).alt,
-          }
+              id: String((product.coverImage as Media).id),
+              url: (product.coverImage as Media).url || undefined,
+              alt: (product.coverImage as Media).alt,
+            }
           : undefined,
         selectedVariant: selectedVariants,
         price: productPrice,
         quantity: 1,
-        uploadedFiles: uploadedFiles,
+        uploadedFiles: prepareUploadedFiles(),
       }
 
       addToCart(cartItem)
+
+      // Note: We don't clear uploaded files since they're already in CMS and referenced by ID
       toast.success('Product added to cart!')
     } catch (error) {
       console.error('Error adding to cart:', error)
@@ -156,19 +301,34 @@ const AddToCart2 = ({ product, productPrice, setProductPrice }: { product: Produ
         })}
       </div>
 
-      {/* TODO: Handle upload files after successful cart add test */}
-
-      {/* <div> */}
-      {/*   <Input */}
-      {/*     type="file" */}
-      {/*     placeholder="Upload files" */}
-      {/*     onChange={(e) => { */}
-      {/*       if (e.target.files && e.target.files.length > 0) { */}
-      {/*         setUploadedFiles({fieldLabel: 'Sinha', }) // always overwrite with the newest file */}
-      {/*       } */}
-      {/*     }} */}
-      {/*   /> */}
-      {/* </div> */}
+      {/* File Upload Fields */}
+      {uploadFields && uploadFields.length > 0 && (
+        <div className="space-y-6 mt-6">
+          <h3 className="text-lg font-medium text-gray-900">Upload Files</h3>
+          {uploadFields.map((field, index) => (
+            <div key={index} className="space-y-2">
+              <FileUpload
+                label={field.label}
+                description={field.description || undefined}
+                required={field.required || false}
+                maxFiles={field.maxFiles || 1}
+                maxFileSize={4} // 4MB limit for Vercel
+                files={pendingFiles[field.label] || []}
+                onFilesChange={(files) => handleFileUpload(field.label, files)}
+                error={uploadErrors[field.label]}
+              />
+              {isUploading[field.label] && (
+                <p className="text-sm text-yellow-600">Uploading files...</p>
+              )}
+              {uploadedFiles[field.label] && uploadedFiles[field.label].length > 0 && (
+                <div className="text-sm text-green-600">
+                  ✅ {uploadedFiles[field.label].length} file(s) uploaded successfully
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* INFO: If variant exists then disable/enable the buttton based on valid variant */}
       {tuppledVariants.length > 0 && (

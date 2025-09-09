@@ -18,17 +18,21 @@ export class OrderService {
     shippingAddress: CreateOrderData['shippingAddress'],
     billingAddress: CreateOrderData['billingAddress'],
   ): Promise<Order> {
+    // Convert cart items to order items (files should already be uploaded with IDs)
+    const orderItems = cart.items.map((item) => ({
+      product: parseInt(item.productId), // Convert string to number
+      selectedVariant: item.selectedVariant,
+      price: item.price,
+      quantity: item.quantity,
+      uploadedFiles:
+        item.uploadedFiles?.map((uploadField) => ({
+          fieldLabel: uploadField.fieldLabel,
+          files: uploadField.files.map((file) => parseInt(file.id)), // Convert uploaded file IDs to numbers
+        })) || [],
+    }))
+
     const orderData: CreateOrderData = {
-      items: cart.items.map((item) => ({
-        product: parseInt(item.productId), // Convert string to number
-        selectedVariant: item.selectedVariant,
-        price: item.price,
-        quantity: item.quantity,
-        uploadedFiles: item.uploadedFiles?.map((upload) => ({
-          fieldLabel: upload.fieldLabel,
-          files: [], // TODO: Handle file uploads properly in the future
-        })),
-      })),
+      items: orderItems,
       totalItems: cart.totalItems,
       totalAmount: cart.totalPrice,
       customerInfo,
