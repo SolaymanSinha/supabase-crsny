@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -108,13 +110,29 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
                 <div className="flex flex-col h-full">
                   {/* Search Section */}
                   <div className="py-4 border-b border-gray-100">
-                    <div className="relative">
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault()
+                        const formData = new FormData(e.currentTarget)
+                        const search = formData.get('search') as string
+                        window.location.href = `/products${search ? `?search=${encodeURIComponent(search)}` : ''}`
+                      }}
+                      className="relative"
+                    >
                       <Input
+                        name="search"
                         placeholder="Search products..."
                         className="pr-10 bg-gray-50 border-gray-200 focus:bg-white"
                       />
-                      <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                    </div>
+                      <Button
+                        type="submit"
+                        variant="ghost"
+                        size="icon"
+                        className="absolute right-1 top-1/2 transform -translate-y-1/2 w-8 h-8"
+                      >
+                        <Search className="w-4 h-4 text-gray-400" />
+                      </Button>
+                    </form>
                   </div>
 
                   {/* Main Navigation */}
@@ -165,15 +183,15 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
                       <h3 className="text-sm font-semibold text-gray-900 mb-3">Categories</h3>
                       <div className="grid grid-cols-2 gap-2">
                         {categories.slice(0, 8).map((category) => (
-                          <a
+                          <Link
                             key={category.id}
-                            href={`/categories/${category.slug}`}
+                            href={`/products?category=${category.slug}`}
                             className="p-3 rounded-lg hover:bg-gray-50 transition-colors"
                           >
                             <span className="text-sm font-medium text-gray-900">
                               {category.name}
                             </span>
-                          </a>
+                          </Link>
                         ))}
 
                         {/* Fallback categories if no categories are available */}
@@ -263,18 +281,28 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
 
             {/* Center - Search */}
             <div className="w-full lg:flex-1 lg:max-w-2xl lg:mx-8">
-              <div className="relative">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  const formData = new FormData(e.currentTarget)
+                  const search = formData.get('search') as string
+                  window.location.href = `/products${search ? `?search=${encodeURIComponent(search)}` : ''}`
+                }}
+                className="relative"
+              >
                 <Input
+                  name="search"
                   placeholder="Search product here"
                   className="pr-12 rounded-r-none bg-white"
                 />
                 <Button
+                  type="submit"
                   className="absolute right-0 top-0 h-full px-4 bg-yellow-400 hover:bg-yellow-500 text-black rounded-l-none rounded-r-md"
                   size="icon"
                 >
                   <Search className="w-5 h-5" />
                 </Button>
-              </div>
+              </form>
             </div>
 
             {/* Right - Support Agent - Desktop only */}
@@ -341,13 +369,13 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
           {/* Center - Navigation Links */}
           <div className="hidden lg:flex items-center space-x-8">
             {categories.slice(0, 6).map((category) => (
-              <a
+              <Link
                 key={category.id}
-                href={`/categories/${category.slug}`}
+                href={`/products?category=${category.slug}`}
                 className="text-black hover:text-gray-600 font-medium"
               >
                 {category.name}
-              </a>
+              </Link>
             ))}
 
             {/* Fallback categories if no categories are available */}
