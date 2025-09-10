@@ -147,4 +147,28 @@ export class OrderRepository {
     })
     return result
   }
+
+  async updateOrderPayment(
+    id: string,
+    paymentData: {
+      paymentStatus: 'pending' | 'paid' | 'failed' | 'refunded'
+      paymentIntentId?: string
+      paymentEmail?: string
+      paymentMethod?: string
+      paidAt?: string
+      stripeCustomerId?: string
+    },
+  ): Promise<Order | null> {
+    try {
+      const updated = await this.payload.update({
+        collection: 'orders',
+        id,
+        data: paymentData,
+      })
+      return updated
+    } catch (error) {
+      console.error('Error updating order payment:', error)
+      return null
+    }
+  }
 }

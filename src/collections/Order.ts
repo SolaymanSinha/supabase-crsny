@@ -334,6 +334,45 @@ export const Order: CollectionConfig = {
       },
     },
     {
+      name: 'paymentIntentId',
+      type: 'text',
+      admin: {
+        description: 'Stripe Payment Intent ID',
+        readOnly: true,
+      },
+    },
+    {
+      name: 'paymentEmail',
+      type: 'email',
+      admin: {
+        description: 'Email used for payment',
+      },
+    },
+    {
+      name: 'stripeCustomerId',
+      type: 'text',
+      admin: {
+        description: 'Stripe Customer ID',
+        readOnly: true,
+      },
+    },
+    {
+      name: 'paymentMethod',
+      type: 'text',
+      admin: {
+        description: 'Payment method used (e.g., card_1234...)',
+        readOnly: true,
+      },
+    },
+    {
+      name: 'paidAt',
+      type: 'date',
+      admin: {
+        description: 'Date and time when payment was completed',
+        readOnly: true,
+      },
+    },
+    {
       name: 'notes',
       type: 'textarea',
       admin: {

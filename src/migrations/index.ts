@@ -1,6 +1,7 @@
 import * as migration_20250907_165515 from './20250907_165515';
 import * as migration_20250907_213415 from './20250907_213415';
 import * as migration_20250909_134321 from './20250909_134321';
+import * as migration_20250909_234900_add_payment_fields from './20250909_234900_add_payment_fields';
 
 export const migrations = [
   {
@@ -16,6 +17,11 @@ export const migrations = [
   {
     up: migration_20250909_134321.up,
     down: migration_20250909_134321.down,
-    name: '20250909_134321'
+    name: '20250909_134321',
+  },
+  {
+    up: migration_20250909_234900_add_payment_fields.up,
+    down: migration_20250909_234900_add_payment_fields.down,
+    name: '20250909_234900_add_payment_fields'
   },
 ];

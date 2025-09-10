@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import PaymentForm from '@/components/forms/payment-form'
 
 const OrderConfirmationPage = async ({ params }: { params: Promise<{ orderNumber: string }> }) => {
   const { orderNumber } = await params
@@ -131,6 +132,40 @@ const OrderConfirmationPage = async ({ params }: { params: Promise<{ orderNumber
             </CardContent>
           </Card>
         </div>
+
+        {/* Payment Section - Only show if payment is pending */}
+        {order.paymentStatus === 'pending' && (
+          <div className="mt-8">
+            <div className="flex justify-center w-full">
+              <PaymentForm
+                orderNumber={order.orderNumber}
+                amount={order.totalAmount}
+                customerEmail={order.customerInfo.email}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Success Message - Show if payment is completed */}
+        {order.paymentStatus === 'paid' && (
+          <Card className="mt-8">
+            <CardContent className="p-6">
+              <div className="text-center">
+                <div className="text-green-600 text-xl font-semibold mb-2">
+                  ✅ Payment Completed Successfully!
+                </div>
+                <p className="text-gray-600">
+                  Thank you for your payment. Your order is now being processed.
+                </p>
+                {order.paidAt && (
+                  <p className="text-sm text-gray-500 mt-2">
+                    Paid on: {new Date(order.paidAt).toLocaleDateString()}
+                  </p>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Order Items */}
         <Card className="mt-8">

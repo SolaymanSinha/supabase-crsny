@@ -508,6 +508,26 @@ export interface Order {
    */
   paymentStatus: 'pending' | 'paid' | 'failed' | 'refunded';
   /**
+   * Stripe Payment Intent ID
+   */
+  paymentIntentId?: string | null;
+  /**
+   * Email used for payment
+   */
+  paymentEmail?: string | null;
+  /**
+   * Stripe Customer ID
+   */
+  stripeCustomerId?: string | null;
+  /**
+   * Payment method used (e.g., card_1234...)
+   */
+  paymentMethod?: string | null;
+  /**
+   * Date and time when payment was completed
+   */
+  paidAt?: string | null;
+  /**
    * Internal notes about the order
    */
   notes?: string | null;
@@ -775,6 +795,11 @@ export interface OrdersSelect<T extends boolean = true> {
         country?: T;
       };
   paymentStatus?: T;
+  paymentIntentId?: T;
+  paymentEmail?: T;
+  stripeCustomerId?: T;
+  paymentMethod?: T;
+  paidAt?: T;
   notes?: T;
   updatedAt?: T;
   createdAt?: T;

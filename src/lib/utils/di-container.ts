@@ -50,6 +50,10 @@ import { PagesRepository } from '@/repositories/pages.repository'
 import { PagesService } from '@/services/pages.service'
 import { PagesController } from '@/controllers/pages.controller'
 
+import { PAYMENT_SERVICE_TOKEN, PAYMENT_CONTROLLER_TOKEN } from '@/lib/constants/di-tokens/payment'
+import { PaymentService } from '@/services/payment.service'
+import { PaymentController } from '@/controllers/payment.controller'
+
 const payload = await getPayloadInstance()
 
 container.register(PAYLOAD_TOKEN, {
@@ -202,6 +206,23 @@ container.register(
   PAGES_CONTROLLER_TOKEN,
   {
     useClass: PagesController,
+  },
+  { lifecycle: Lifecycle.Transient },
+)
+
+// * Payment
+container.register(
+  PAYMENT_SERVICE_TOKEN,
+  {
+    useClass: PaymentService,
+  },
+  { lifecycle: Lifecycle.Transient },
+)
+
+container.register(
+  PAYMENT_CONTROLLER_TOKEN,
+  {
+    useClass: PaymentController,
   },
   { lifecycle: Lifecycle.Transient },
 )

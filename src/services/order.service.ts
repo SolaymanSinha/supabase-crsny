@@ -78,6 +78,20 @@ export class OrderService {
     return await this.orderRepository.updatePaymentStatus(id, paymentStatus)
   }
 
+  async updateOrderPayment(
+    id: string,
+    paymentData: {
+      paymentStatus: 'pending' | 'paid' | 'failed' | 'refunded'
+      paymentIntentId?: string
+      paymentEmail?: string
+      paymentMethod?: string
+      paidAt?: string
+      stripeCustomerId?: string
+    },
+  ): Promise<Order | null> {
+    return await this.orderRepository.updateOrderPayment(id, paymentData)
+  }
+
   async getAllOrders(
     page = 1,
     limit = 10,
