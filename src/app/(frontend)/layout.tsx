@@ -8,8 +8,9 @@ import { Company } from '@/payload-types'
 import { getFeaturedCategories } from '@/functions/category.function'
 import Footer from '@/components/custom/footer'
 import { getWebContent } from '@/functions/webContent.function'
+import { Metadata } from 'next'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Store',
   description: 'we are here to make your printing works easier',
 }
