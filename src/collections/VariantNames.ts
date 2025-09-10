@@ -6,6 +6,7 @@ export const VariantNames: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['id', 'name'],
     group: 'E-commerce',
+    hidden: true
   },
   access: {
     read: () => true,
