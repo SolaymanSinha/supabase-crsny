@@ -4,6 +4,29 @@ import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import PaymentForm from '@/components/forms/payment-form'
+import { getCompany } from '@/functions/company.function'
+import { generateSEOMetadata } from '@/lib/utils/seo'
+import { Metadata } from 'next'
+
+
+export async function generateMetadata({ params }: { params: Promise<{ orderNumber: string }> }): Promise<Metadata> {
+  const metaDescription = 'Use your order id to track your order';
+  try {
+    const { orderNumber } = await params
+
+    const company = await getCompany()
+    return generateSEOMetadata(
+      { title: `Order ID - ${orderNumber}`, description: metaDescription, noIndex: true },
+      company.data,
+    )
+  } catch (error) {
+    console.error('Error generating order confimation page metadata:', error)
+    return {
+      title: `Order Success Page`,
+      description: metaDescription,
+    }
+  }
+}
 
 const OrderConfirmationPage = async ({ params }: { params: Promise<{ orderNumber: string }> }) => {
   const { orderNumber } = await params
