@@ -1,6 +1,23 @@
-'use client'
-
 import { CheckoutForm } from '@/components/forms/checkout'
+import { getCompany } from '@/functions/company.function'
+import { generateSEOMetadata } from '@/lib/utils/seo'
+import { Metadata } from 'next'
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const company = await getCompany()
+    return generateSEOMetadata(
+      { title: 'Checkout', description: 'Place your order', noIndex: true },
+      company.data,
+    )
+  } catch (error) {
+    console.error('Error generating Checkout page metadata:', error)
+    return {
+      title: 'Checkout',
+      description: 'Place your order',
+    }
+  }
+}
 
 export default function CheckoutPage() {
   return (
