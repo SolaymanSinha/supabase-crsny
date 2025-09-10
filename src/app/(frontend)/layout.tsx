@@ -8,6 +8,7 @@ import { Company } from '@/payload-types'
 import { getFeaturedCategories } from '@/functions/category.function'
 import Footer from '@/components/custom/footer'
 import { getWebContent } from '@/functions/webContent.function'
+import './reflect-metadata-client-side';
 
 export const metadata = {
   title: 'Store',
