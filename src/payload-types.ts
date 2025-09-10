@@ -69,11 +69,11 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    products: Product;
+    orders: Order;
     categories: Category;
     'variant-names': VariantName;
     'variant-values': VariantValue;
-    products: Product;
-    orders: Order;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -82,11 +82,11 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
+    orders: OrdersSelect<false> | OrdersSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     'variant-names': VariantNamesSelect<false> | VariantNamesSelect<true>;
     'variant-values': VariantValuesSelect<false> | VariantValuesSelect<true>;
-    products: ProductsSelect<false> | ProductsSelect<true>;
-    orders: OrdersSelect<false> | OrdersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -174,72 +174,6 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: number;
-  /**
-   * Category name
-   */
-  name: string;
-  /**
-   * URL-friendly identifier for the category
-   */
-  slug: string;
-  /**
-   * Category description
-   */
-  description?: string | null;
-  /**
-   * Category image
-   */
-  image?: (number | null) | Media;
-  /**
-   * Mark as featured category
-   */
-  featured?: boolean | null;
-  /**
-   * SEO settings for category pages
-   */
-  seo?: {
-    /**
-     * SEO title (if different from category name)
-     */
-    title?: string | null;
-    /**
-     * SEO meta description for category pages
-     */
-    description?: string | null;
-    /**
-     * SEO keywords (comma-separated)
-     */
-    keywords?: string | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "variant-names".
- */
-export interface VariantName {
-  id: number;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "variant-values".
- */
-export interface VariantValue {
-  id: number;
-  value: string;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -357,6 +291,52 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  /**
+   * Category name
+   */
+  name: string;
+  /**
+   * URL-friendly identifier for the category
+   */
+  slug: string;
+  /**
+   * Category description
+   */
+  description?: string | null;
+  /**
+   * Category image
+   */
+  image?: (number | null) | Media;
+  /**
+   * Mark as featured category
+   */
+  featured?: boolean | null;
+  /**
+   * SEO settings for category pages
+   */
+  seo?: {
+    /**
+     * SEO title (if different from category name)
+     */
+    title?: string | null;
+    /**
+     * SEO meta description for category pages
+     */
+    description?: string | null;
+    /**
+     * SEO keywords (comma-separated)
+     */
+    keywords?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -536,6 +516,26 @@ export interface Order {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "variant-names".
+ */
+export interface VariantName {
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "variant-values".
+ */
+export interface VariantValue {
+  id: number;
+  value: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -550,6 +550,14 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
+        relationTo: 'products';
+        value: number | Product;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: number | Order;
+      } | null)
+    | ({
         relationTo: 'categories';
         value: number | Category;
       } | null)
@@ -560,14 +568,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'variant-values';
         value: number | VariantValue;
-      } | null)
-    | ({
-        relationTo: 'products';
-        value: number | Product;
-      } | null)
-    | ({
-        relationTo: 'orders';
-        value: number | Order;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -651,44 +651,6 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories_select".
- */
-export interface CategoriesSelect<T extends boolean = true> {
-  name?: T;
-  slug?: T;
-  description?: T;
-  image?: T;
-  featured?: T;
-  seo?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        keywords?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "variant-names_select".
- */
-export interface VariantNamesSelect<T extends boolean = true> {
-  name?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "variant-values_select".
- */
-export interface VariantValuesSelect<T extends boolean = true> {
-  value?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -801,6 +763,44 @@ export interface OrdersSelect<T extends boolean = true> {
   paymentMethod?: T;
   paidAt?: T;
   notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  image?: T;
+  featured?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        keywords?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "variant-names_select".
+ */
+export interface VariantNamesSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "variant-values_select".
+ */
+export interface VariantValuesSelect<T extends boolean = true> {
+  value?: T;
   updatedAt?: T;
   createdAt?: T;
 }
