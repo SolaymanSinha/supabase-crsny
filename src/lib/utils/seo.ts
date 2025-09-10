@@ -10,6 +10,7 @@ interface SEOConfig {
   type?: 'website' | 'article'
   siteName?: string
   locale?: string
+  noIndex?: boolean
 }
 
 interface CompanySEO {
@@ -76,11 +77,11 @@ export function generateSEOMetadata(config: SEOConfig, companyInfo?: Company): M
 
     // Additional metadata
     robots: {
-      index: true,
-      follow: true,
+      index: !config.noIndex,
+      follow: !config.noIndex,
       googleBot: {
-        index: true,
-        follow: true,
+        index: !config.noIndex,
+        follow: !config.noIndex,
         'max-video-preview': -1,
         'max-image-preview': 'large',
         'max-snippet': -1,
@@ -97,7 +98,7 @@ export function generateSEOMetadata(config: SEOConfig, companyInfo?: Company): M
 /**
  * Generate SEO metadata for product pages
  */
-export function generateProductSEO(product: Product, companyInfo?: Company): Metadata {
+export function generateProductSEO(product: Product, companyInfo?: Company, noIndex?: boolean): Metadata {
   const productSEO = product.seo
   const category =
     product.category && typeof product.category === 'object' ? product.category : null
@@ -118,6 +119,7 @@ export function generateProductSEO(product: Product, companyInfo?: Company): Met
         ? product.coverImage.url
         : undefined,
     type: 'website',
+    noIndex,
   }
 
   return generateSEOMetadata(config, companyInfo)
@@ -126,7 +128,7 @@ export function generateProductSEO(product: Product, companyInfo?: Company): Met
 /**
  * Generate SEO metadata for category pages
  */
-export function generateCategorySEO(category: Category, companyInfo?: Company): Metadata {
+export function generateCategorySEO(category: Category, companyInfo?: Company, noIndex?: boolean): Metadata {
   const config: SEOConfig = {
     title: `${category.name} Products`,
     description:
@@ -137,6 +139,7 @@ export function generateCategorySEO(category: Category, companyInfo?: Company): 
     image:
       typeof category.image === 'object' && category.image?.url ? category.image.url : undefined,
     type: 'website',
+    noIndex,
   }
 
   return generateSEOMetadata(config, companyInfo)
@@ -149,6 +152,7 @@ export function generatePageSEO(
   pageType: 'aboutUs' | 'contactUs' | 'faqs',
   pageData: any,
   companyInfo?: Company,
+  noIndex?: boolean,
 ): Metadata {
   const companyName = companyInfo?.name || 'Store'
 
@@ -160,6 +164,7 @@ export function generatePageSEO(
         `Learn more about ${companyName}. Discover our story, mission, and the team behind our success.`,
       keywords: `about us, company, team, mission, ${companyName}`.toLowerCase(),
       url: '/about',
+      noIndex,
     },
     contactUs: {
       title: pageData?.title || 'Contact Us',
@@ -168,6 +173,7 @@ export function generatePageSEO(
         `Get in touch with ${companyName}. Contact our team for support, inquiries, or to learn more about our services.`,
       keywords: `contact, support, help, get in touch, ${companyName}`.toLowerCase(),
       url: '/contact',
+      noIndex,
     },
     faqs: {
       title: pageData?.title || 'Frequently Asked Questions',
@@ -176,6 +182,7 @@ export function generatePageSEO(
         `Find answers to common questions about ${companyName}. Get quick solutions and helpful information.`,
       keywords: `faq, help, questions, answers, support, ${companyName}`.toLowerCase(),
       url: '/faqs',
+      noIndex,
     },
   }
 
@@ -188,6 +195,7 @@ export function generatePageSEO(
 export function generateProductsListingSEO(
   searchParams: { search?: string; category?: string } = {},
   companyInfo?: Company,
+  noIndex?: boolean,
 ): Metadata {
   const companyName = companyInfo?.name || 'Store'
   let title = 'Products'
@@ -213,6 +221,7 @@ export function generateProductsListingSEO(
         ? `?${new URLSearchParams(searchParams).toString()}`
         : ''),
     type: 'website',
+    noIndex,
   }
 
   return generateSEOMetadata(config, companyInfo)
@@ -221,7 +230,7 @@ export function generateProductsListingSEO(
 /**
  * Generate SEO metadata for the home page
  */
-export function generateHomeSEO(companyInfo?: Company): Metadata {
+export function generateHomeSEO(companyInfo?: Company, noIndex?: boolean): Metadata {
   const companyName = companyInfo?.name || 'Store'
   const companySEO = companyInfo?.seo as CompanySEO | undefined
 
@@ -236,6 +245,7 @@ export function generateHomeSEO(companyInfo?: Company): Metadata {
       `${companyName}, products, services, quality, shop online`.toLowerCase(),
     url: '/',
     type: 'website',
+    noIndex,
   }
 
   return generateSEOMetadata(config, companyInfo)
