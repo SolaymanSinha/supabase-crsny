@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
-import { Search, HelpCircle, Users, Phone, Menu, ShoppingCart } from 'lucide-react'
+import { Search, HelpCircle, Users, Phone, Menu } from 'lucide-react'
 import { CartIcon } from './cart-icon'
 import Image from 'next/image'
 import Link from 'next/link'

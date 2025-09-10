@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { NextRequest, NextResponse } from 'next/server'
 import { createPaymentIntent } from '@/functions/payment.function'
 import { z } from 'zod'

@@ -3,13 +3,7 @@ import { Media, Product } from '@/payload-types'
 import React from 'react'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
-import { AddToCartForm } from '../forms/add-to-cart'
 import AddToCart2 from '../forms/add-to-cart-2'
-
-interface ReactImageGalleryType {
-  original: string
-  thumbnail: string
-}
 
 const ProductDetails = ({ product }: { product: Product }) => {
   const [productPrice, setProductPrice] = React.useState(product?.basePrice)
@@ -40,7 +34,7 @@ const ProductDetails = ({ product }: { product: Product }) => {
             items={getReactImageGallery(
               (allImages.every((image) => typeof image === 'object' && image !== null) &&
                 allImages) ||
-              [],
+                [],
             )}
           />
         </div>
@@ -70,7 +64,11 @@ const ProductDetails = ({ product }: { product: Product }) => {
           </div>
 
           {/* <AddToCartForm product={product} /> */}
-          <AddToCart2 product={product} productPrice={productPrice} setProductPrice={setProductPrice} />
+          <AddToCart2
+            product={product}
+            productPrice={productPrice}
+            setProductPrice={setProductPrice}
+          />
         </div>
       </div>
     </section>

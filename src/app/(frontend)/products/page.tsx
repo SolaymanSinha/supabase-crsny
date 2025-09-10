@@ -155,8 +155,8 @@ async function ProductsContent({ searchParams }: { searchParams: ProductSearchPa
           <div>
             <h1 className="text-2xl font-bold text-gray-900 mb-2">Oops! Something went wrong</h1>
             <p className="text-gray-600 mb-6">
-              We're having trouble loading the products. Please try again later or contact support
-              if the problem persists.
+              We&apos;re having trouble loading the products. Please try again later or contact
+              support if the problem persists.
             </p>
             <button
               onClick={() => window.location.reload()}

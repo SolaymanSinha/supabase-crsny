@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayloadInstance } from '@/lib/utils/getPayload'
 import { z } from 'zod'
 
-const uploadSchema = z.object({
+const _uploadSchema = z.object({
   files: z.array(z.instanceof(File)).min(1, 'At least one file is required'),
   fieldLabel: z.string().min(1, 'Field label is required'),
 })
@@ -104,12 +104,12 @@ export async function POST(request: NextRequest) {
         uploadedFiles: uploadedMedia,
       },
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('File upload error:', error)
     return NextResponse.json(
       {
         success: false,
-        error: error.message || 'Internal server error during file upload',
+        error: error instanceof Error ? error.message : 'Internal server error during file upload',
       },
       { status: 500 },
     )

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -24,7 +24,7 @@ import {
 } from '@/components/ui/pagination'
 import { Search, Filter, Grid, List, SlidersHorizontal, X } from 'lucide-react'
 import { ProductSearchParams, ProductSearchResult } from '@/repositories/product.repository'
-import { Category, Company, Media } from '@/payload-types'
+import { Category, Company, Media, Product } from '@/payload-types'
 import { getFullURL, fallbackImageURL } from '@/lib/utils/url'
 
 interface ProductsPageClientProps {
@@ -37,7 +37,7 @@ interface ProductsPageClientProps {
 export default function ProductsPageClient({
   products,
   categories,
-  companyInfo,
+  companyInfo: _companyInfo,
   initialSearchParams,
 }: ProductsPageClientProps) {
   const router = useRouter()
@@ -464,7 +464,7 @@ export default function ProductsPageClient({
 }
 
 // Product Card Component
-function ProductCard({ product, viewMode }: { product: any; viewMode: 'grid' | 'list' }) {
+function ProductCard({ product, viewMode }: { product: Product; viewMode: 'grid' | 'list' }) {
   const coverImage = product.coverImage as Media
   const category = product.category
 

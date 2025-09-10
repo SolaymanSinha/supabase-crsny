@@ -4,7 +4,6 @@ import { Badge } from '../ui/badge'
 import { Product } from '@/payload-types'
 import Image from 'next/image'
 import { fallbackImageURL, getFullURL } from '@/lib/utils/url'
-import { H1 } from '../ui/h1'
 import SectionHeading from './section-heading'
 import Link from 'next/link'
 

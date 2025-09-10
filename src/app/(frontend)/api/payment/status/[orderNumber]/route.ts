@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { NextRequest, NextResponse } from 'next/server'
 import { getPaymentStatus } from '@/functions/payment.function'
 
@@ -50,5 +51,3 @@ export async function OPTIONS() {
     },
   })
 }
-
-
