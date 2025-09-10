@@ -1,4 +1,3 @@
-// storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -14,7 +13,6 @@ import { VariantNames } from './collections/VariantNames'
 import { VariantValues } from './collections/VariantValues'
 import { Product } from './collections/Product'
 import { Order } from './collections/Order'
-import { s3Storage } from '@payloadcms/storage-s3'
 import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 import { WebContents } from './globals/WebContents'
 import { Pages } from './globals/Pages'
@@ -31,12 +29,12 @@ export default buildConfig({
     autoLogin:
       process.env.NODE_ENV === 'development'
         ? {
-            email: 'admin@admin.com',
-            password: 'admin',
-          }
+          email: 'admin@admin.com',
+          password: 'admin',
+        }
         : false,
   },
-  collections: [Users, Media, Categories, VariantNames, VariantValues, Product, Order],
+  collections: [Users, Media, Product, Order, Categories, VariantNames, VariantValues],
   globals: [Company, WebContents, Pages],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
