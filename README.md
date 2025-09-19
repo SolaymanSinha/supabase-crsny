@@ -1,67 +1,198 @@
-# Payload Blank Template
+# CRSNY E-Commerce Platform
 
-This template comes configured with the bare minimum to get started on anything you need.
+A modern, full-stack e-commerce application built with Next.js 15, PayloadCMS 3.0, and React 19. This platform features a comprehensive admin panel, custom product variants, Stripe payment integration, and file uploads.
 
-## Quick start
+## 🚀 Features
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+### Frontend
+- **Modern Stack**: Next.js 15 with App Router and React 19
+- **Responsive Design**: Tailwind CSS with Shadcn/ui components
+- **State Management**: Jotai for efficient state management
+- **Forms**: React Hook Form with Zod validation
+- **File Uploads**: React Dropzone with UploadThing integration
+- **UI Components**: ShadCN UI
+- **Animations**: Embla Carousel and React Fast Marquee
 
-## Quick Start - local setup
+### Backend & CMS
+- **Headless CMS**: PayloadCMS 3.0 with PostgreSQL
+- **Database**: PostgreSQL with migrations support
+- **File Storage**: UploadThing for secure file uploads
+- **Rich Text**: Lexical editor for content management
+- **GraphQL**: Built-in GraphQL API with playground
 
-To spin up this template locally, follow these steps:
+### E-Commerce Features
+- **Product Management**: Complex product variants and categories
+- **Order System**: Complete order management with Stripe integration
+- **Payment Processing**: Stripe integration with payment intents
+- **File Uploads**: Customer file uploads for custom orders
+- **SEO Optimization**: Built-in SEO fields for all products
 
-### Clone
+### Architecture
+- **Domain-Driven Design**: Clean architecture with separation of concerns
+- **Dependency Injection**: TSyringe for better testability
+- **Type Safety**: Full TypeScript implementation
+- **Deployment**: Optimized for Vercel
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+## 📁 Project Structure
 
-### Development
+```
+src/
+├── app/
+│   ├── (frontend)/          # Public-facing pages
+│   │   ├── products/        # Product catalog
+│   │   ├── checkout/        # Checkout flow
+│   │   ├── cart/           # Shopping cart
+│   │   └── api/            # Frontend API routes
+│   └── (payload)/          # Admin panel routes
+├── collections/            # PayloadCMS collections
+│   ├── Product.ts          # Product schema
+│   ├── Order.ts           # Order management
+│   ├── Categories.ts      # Product categories
+│   └── Users.ts           # User management
+├── components/
+│   ├── ui/                # Shadcn/ui components
+│   ├── custom/            # Custom components
+│   └── forms/             # Form components
+├── lib/
+│   ├── utils/             # Utility functions
+│   ├── constants/         # App constants
+│   └── atoms/             # Jotai state atoms
+├── globals/               # PayloadCMS global configurations
+├── migrations/            # Database migrations
+└── services/              # Business logic services
+```
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URI` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+## 🚀 Quick Start
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+### Prerequisites
+- Node.js 18.20.2+ or 20.9.0+
+- pnpm 9+
+- PostgreSQL database
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+### Installation
 
-#### Docker (Optional)
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd crsny-new
+   ```
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+2. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
 
-To do so, follow these steps:
+3. **Environment Setup**
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Update the `.env` file with your credentials:
+   ```env
+   DATABASE_URI=your_postgresql_connection_string
+   PAYLOAD_SECRET=your_payload_secret
+   UPLOADTHING_TOKEN=your_uploadthing_token
+   STRIPE_SECRET_KEY=your_stripe_secret_key
+   STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+   ```
 
-- Modify the `MONGODB_URI` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URI` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+4. **Database Setup**
+   ```bash
+   pnpm payload migrate
+   ```
 
-## How it works
+5. **Start Development Server**
+   ```bash
+   pnpm dev
+   ```
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+6. **Access the Application**
+   - Frontend: http://localhost:3000
+   - Admin Panel: http://localhost:3000/admin
+   - GraphQL Playground: http://localhost:3000/api/graphql-playground
 
-### Collections
+### Default Admin Credentials (Development)
+- Only works if you are starting with a fresh database
+- Email: `admin@admin.com`
+- Password: `admin`
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+## 🏗 Build & Deployment
 
-- #### Users (Authentication)
+### Production Build
+```bash
+pnpm build
+```
 
-  Users are auth-enabled collections that have access to the admin panel.
+### Start Production Server
+```bash
+pnpm start
+```
 
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/main/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+## 📊 Key Collections
 
-- #### Media
+### Products
+- Complex variant system (size, color, material)
+- SEO optimization fields
+- Custom upload fields for customer files
+- Image galleries with cover images
+- Category relationships
 
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
+### Orders
+- Stripe payment integration
+- Order status tracking
+- Customer file attachments
+- Billing and shipping information
 
-### Docker
+### Categories
+- Hierarchical category structure
+- SEO-friendly URLs
+- Product filtering capabilities
 
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
+## 🔧 Development Scripts
 
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
+```bash
+# Development
+pnpm dev                    # Start dev server
+pnpm devsafe               # Clean start (removes .next)
 
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
+# Building
+pnpm build                 # Production build
+pnpm start                 # Start production server
 
-## Questions
+# PayloadCMS
+pnpm payload migrate       # Run database migrations
+pnpm generate:types        # Generate TypeScript types
+pnpm generate:importmap    # Generate import map
 
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+# Code Quality
+pnpm lint                  # Run ESLint
+```
+
+## 🌟 Features Overview
+
+### Admin Panel
+- Intuitive content management interface
+- Product variant configuration
+- Order management dashboard
+- Media library with UploadThing
+- User role management
+
+### Customer Experience
+- Product browsing with filtering
+- Shopping cart functionality
+- Secure checkout with Stripe
+- File upload for custom orders
+- Order confirmation and tracking
+
+### Developer Experience
+- Hot reload in development
+- TypeScript for type safety
+- Modern tooling and build process
+- Clean architecture patterns
+
+## 🆘 Support
+
+For questions or issues:
+- Check the [PayloadCMS Documentation](https://payloadcms.com/docs)
+- Review [Next.js Documentation](https://nextjs.org/docs)
+- Join the [PayloadCMS Discord](https://discord.com/invite/payload)
