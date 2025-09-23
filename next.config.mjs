@@ -35,6 +35,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'crsny-app.vercel.app',
+        port: '',
+        pathname: '/**',
+      }
     ],
   },
 }
