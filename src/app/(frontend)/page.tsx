@@ -14,6 +14,8 @@ import { BestDeals } from '@/components/custom/best-deals'
 import KeyFeatures from '@/components/custom/key-features'
 import Newsletter from '@/components/custom/newsletter'
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const companyResponse = await getCompany()
