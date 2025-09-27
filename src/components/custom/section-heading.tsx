@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 
 const SectionHeading = ({ children, className }: { children: string; className?: string }) => {
   return (
-    <H1 className={cn('text-4xl md:text-5xl font-bold text-black mb-8 text-left', className)}>
+    <H1 className={cn('text-4xl md:text-5xl font-bold text-[#211D5A] mb-8 text-left', className)}>
       {children}
     </H1>
   )

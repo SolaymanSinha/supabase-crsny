@@ -26,7 +26,7 @@ export default function Footer({
     },
   } = companyInfo
   return (
-    <footer className="w-full bg-black text-white">
+    <footer className="w-full bg-[#211D5A] text-white">
       <div className="w-full max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* About */}
