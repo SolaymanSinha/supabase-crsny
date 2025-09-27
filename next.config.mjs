@@ -43,7 +43,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'crsprintingsing.com',
+        hostname: 'www.crsprintingsing.com',
         port: '',
         pathname: '/**',
       }
