@@ -1,6 +1,6 @@
 # CRSNY E-Commerce Platform
 
-A modern, full-stack e-commerce application built with Next.js 15, PayloadCMS 3.0, and React 19. This platform features a comprehensive admin panel, custom product variants, Stripe payment integration, and file uploads.
+A modern, full-stack e-commerce application built with Next.js 15, PayloadCMS 3.0, and React 19. This platform features a comprehensive admin panel, custom product variants, Stripe payment integration, and file uploads. 
 
 ## 🚀 Features
 
