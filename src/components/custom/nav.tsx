@@ -32,8 +32,8 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
   return (
     <div className="relative w-full bg-white shadow-md">
       {/* Top Section */}
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
+      <div className="px-4 py-4 bg-[#43A2DA]">
+        <div className="container mx-auto flex items-center justify-between">
           {/* Left - Logo (Mobile/Tablet) + Desktop Navigation Links */}
           <div className="flex items-center space-x-4 lg:space-x-8">
             {/* Logo - Mobile/Tablet only */}
@@ -55,24 +55,24 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
             </div>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center space-x-6">
+            <div className="hidden lg:flex text-white items-center space-x-6">
               <Link
                 href="/about"
-                className="flex items-center space-x-2 text-black hover:text-yellow-500 transition-colors"
+                className="flex items-center space-x-2 hover:text-yellow-500 transition-colors"
               >
                 <Users className="w-5 h-5" />
                 <span className="font-medium">About Us</span>
               </Link>
               <Link
                 href="/contact"
-                className="flex items-center space-x-2 text-black hover:text-yellow-500 transition-colors"
+                className="flex items-center space-x-2 hover:text-yellow-500 transition-colors"
               >
                 <Phone className="w-5 h-5" />
                 <span className="font-medium">Contact Us</span>
               </Link>
               <Link
                 href="/faqs"
-                className="flex items-center space-x-2 text-black hover:text-yellow-500 transition-colors"
+                className="flex items-center space-x-2 hover:text-yellow-500 transition-colors"
               >
                 <HelpCircle className="w-5 h-5" />
                 <span className="font-medium">FAQs</span>
@@ -81,7 +81,7 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
           </div>
 
           {/* Right - Cart, Login, Sign Up */}
-          <div className="flex items-center space-x-2 lg:space-x-4">
+          <div className="flex items-center text-white space-x-2 lg:space-x-4">
             {/* Cart */}
             <CartIcon />
 
@@ -260,7 +260,7 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
       </div>
 
       {/* Middle Section - Black Background */}
-      <div className="bg-black py-4">
+      <div className="bg-white py-4">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
             {/* Logo - Desktop only */}
@@ -293,14 +293,14 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
                 <Input
                   name="search"
                   placeholder="Search product here"
-                  className="pr-12 rounded-r-none bg-white"
+                  className="pr-12 border-yellow-500 bg-white"
                 />
                 <Button
                   type="submit"
                   className="absolute right-0 top-0 h-full px-4 bg-yellow-400 hover:bg-yellow-500 text-black rounded-l-none rounded-r-md"
                   size="icon"
                 >
-                  <Search className="w-5 h-5" />
+                  <Search className="w-5 h-5 text-white" />
                 </Button>
               </form>
             </div>
@@ -308,9 +308,9 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
             {/* Right - Support Agent - Desktop only */}
             <div className="hidden lg:flex items-center space-x-4">
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                <Phone className="w-6 h-6 text-black" />
+                <Phone className="w-10 h-10 text-white bg-[#211D5A] rounded-full p-2" />
               </div>
-              <div className="text-white">
+              <div className="text-[#211D5A]">
                 <div className="text-sm font-medium">Support 24/7</div>
                 <div className="text-lg font-semibold">
                   {companyInfo?.contactInfo?.primaryPhone || '347 289 3281'}
@@ -322,12 +322,12 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
       </div>
 
       {/* Bottom Section */}
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
+      <div className="bg-[#211D5A] px-4 py-4">
+        <div className="container mx-auto text-white flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
           {/* Left - Categories Dropdown */}
           <div className="w-full lg:w-auto">
             <Select>
-              <SelectTrigger className="w-full lg:w-[200px] bg-gray-100 hover:bg-gray-200">
+              <SelectTrigger className="w-full lg:w-[200px] bg-transparent hover:bg-gray-200">
                 <SelectValue placeholder="All categories" />
               </SelectTrigger>
               <SelectContent>
@@ -372,7 +372,7 @@ export default function Nav({ companyInfo, categories = [] }: NavProps) {
               <Link
                 key={category.id}
                 href={`/products?category=${category.slug}`}
-                className="text-black hover:text-gray-600 font-medium"
+                className="hover:text-gray-600 font-medium"
               >
                 {category.name}
               </Link>

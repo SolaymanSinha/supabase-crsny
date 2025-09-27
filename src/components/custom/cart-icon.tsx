@@ -15,7 +15,7 @@ export const CartIcon = () => {
       <Button
         variant="outline"
         size="sm"
-        className="relative hover:bg-yellow-50 hover:border-yellow-500 transition-colors"
+        className="relative bg-transparent hover:bg-yellow-50 hover:border-yellow-500 transition-colors"
       >
         <ShoppingCart className="w-4 h-4" />
         {cartTotals.totalItems > 0 && (
