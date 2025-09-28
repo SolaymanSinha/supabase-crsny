@@ -121,9 +121,9 @@ export default function Footer({
 
       <div className="border-t border-white/10">
         <div className="w-full max-w-7xl mx-auto px-4 py-6">
-          <p className="text-center text-sm md:text-base text-white/50">{copyright} {""}
+          <p className="text-center text-sm md:text-base text-white/50">{copyright}. Designed and Developed By {" "}
 					<span
-						className={"text-logoColor cursor-pointer hover:border-b-2 hover:border-logoColor hover:transition-colors hover:duration-1000"}>
+						className={"text-yellow-500 cursor-pointer hover:border-b-2 hover:border-yellow-500 hover:transition-colors hover:duration-1000"}>
 						<a
 							href="https://www.linkedin.com/in/shah-solayman-sinha-44246b231/"
 							target="_blank">
